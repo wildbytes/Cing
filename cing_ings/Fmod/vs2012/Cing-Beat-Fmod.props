@@ -11,6 +11,11 @@
       <AdditionalLibraryDirectories>$(CING_INGS_ROOT)\Fmod\lib\lib\vs2012;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>fmodex_vc.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>%(Command)
+
+xcopy "$(CING_INGS_ROOT)Fmod\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup />
 </Project>
