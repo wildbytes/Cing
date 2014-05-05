@@ -1,12 +1,14 @@
 #include "Cing.h"
 CREATE_APPLICATION( "Cing" );
 
+#include "Fmod/src/SoundFMOD.h"
+
 /*
  * This example shows of to load and play a sound.
  * It also uses the volume of the played sound to modify the intensity of a light in the scene
  */
 
-Sound			sound;					// To play a sound
+SoundFMOD		sound;					// To play a sound
 Sphere			sphere;					// 3d sphere
 Plane			plane;					// 3d plane
 PointLight		light;					// point light

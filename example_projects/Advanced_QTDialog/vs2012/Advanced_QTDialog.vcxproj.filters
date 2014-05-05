@@ -8,7 +8,9 @@
     <ClCompile Include="..\src\GeneratedFiles\Debug\moc_QTDialogSample.cpp">
       <Filter>GeneratedFiles\Debug</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\GeneratedFiles\Release\moc_QTDialogSample.cpp" />
+    <ClCompile Include="..\src\GeneratedFiles\Release\moc_QTDialogSample.cpp">
+      <Filter>GeneratedFiles\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="UI">

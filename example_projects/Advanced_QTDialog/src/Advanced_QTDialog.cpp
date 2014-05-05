@@ -39,6 +39,7 @@ void draw()
 		qtApp->processEvents();
 	}
 
+	text( "Press 'd' to show the dialog if you closed it :)", 10, 10 );
 	
 }
 

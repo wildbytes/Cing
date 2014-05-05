@@ -166,6 +166,9 @@
     <Filter Include="cing_ings\cURLNetworkClient">
       <UniqueIdentifier>{eb1fa3fd-32f1-40c4-9086-9c2ec045f784}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cing_ings\fmod">
+      <UniqueIdentifier>{92fb780d-3b33-4dc4-8ef2-2395269d9a71}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material">
@@ -191,16 +194,7 @@
     <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
       <Filter>Src</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\audio\AudioInputFMOD.cpp">
-      <Filter>Src\Audio\Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\audio\AudioInputOpenAL.cpp">
-      <Filter>Src\Audio\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\audio\SoundFMOD.cpp">
-      <Filter>Src\Audio\Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\audio\SoundManagerFMOD.cpp">
       <Filter>Src\Audio\Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp">
@@ -455,30 +449,27 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.cpp">
       <Filter>cing_ings\cURLNetworkClient</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.cpp">
+      <Filter>cing_ings\fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundManagerFMOD.cpp">
+      <Filter>cing_ings\fmod</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.cpp">
+      <Filter>cing_ings\fmod</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
       <Filter>Src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\audio\AudioInputFMOD.h">
-      <Filter>Src\Audio\Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\audio\AudioInputOpenAL.h">
-      <Filter>Src\Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\audio\AudioPrereqs.h">
       <Filter>Src\Audio\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\audio\BaseAudioInput.h">
       <Filter>Src\Audio\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\audio\BaseSound.h">
-      <Filter>Src\Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\audio\SoundFMOD.h">
-      <Filter>Src\Audio\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\audio\SoundManagerFMOD.h">
       <Filter>Src\Audio\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\audio\SoundManagerOpenAL.h">
@@ -829,6 +820,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.h">
       <Filter>cing_ings\cURLNetworkClient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.h">
+      <Filter>cing_ings\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioPrereqs.h">
+      <Filter>cing_ings\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.h">
+      <Filter>cing_ings\fmod</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\SoundManagerFMOD.h">
+      <Filter>cing_ings\fmod</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
