@@ -7,7 +7,7 @@
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
-      <AdditionalIncludeDirectories>$(QTDIR)\src;$(QTDIR)\lib\include\;$(QTDIR)\lib\include\QtCore;$(QTDIR)\lib\include\QtGui;$(QTDIR)\lib\include\QtWidgets;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\src;$(QTDIR)\lib\include\;$(QTDIR)\lib\include\QtCore;$(QTDIR)\lib\include\QtGui;$(QTDIR)\lib\include\QtWidgets;./GeneratedFiles;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalDependencies>Qt5Core.lib;Qt5Gui.lib;Qt5Widgets.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -19,6 +19,7 @@
     <PostBuildEvent>
       <Command>%(Command)
 
+echo "Copying QT dependencies to bin folder"
 xcopy "$(CING_INGS_ROOT)QT\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s
 </Command>
     </PostBuildEvent>
