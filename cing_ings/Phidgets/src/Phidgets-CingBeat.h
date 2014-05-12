@@ -30,6 +30,8 @@
 /// This file simplifies the use of the Phidgets module.
 // To use it in a VS2012 project add the Cing-Beat-Phidgets-x86 or Cing-Beat-Phidgets-x64 property sheet
 
+// Info about coding with Phidgets: http://www.phidgets.com/documentation/Programming_Manual.pdf
+
 // Phidgets
 #include "Phidgets/lib/include/phidget21.h"
 #include "PhidgetMotorController.h"

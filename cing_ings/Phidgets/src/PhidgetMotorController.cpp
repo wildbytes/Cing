@@ -175,7 +175,7 @@ namespace Cing
 		display_properties(m_motoControl);
 
 		//read motor control event data
-		LOG("Reading.....\n");
+		LOG("Conection to motor(s) up and running...\n");
 
 
 		// all good
