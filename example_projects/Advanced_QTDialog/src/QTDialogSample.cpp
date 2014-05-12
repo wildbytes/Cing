@@ -38,9 +38,9 @@ QTDialogSample::QTDialogSample(QWidget* parent)
 //-------------------------------------------------------------------------------------------------
 QTDialogSample::~QTDialogSample()
 {
+	delete m_ui;
+	m_ui = NULL;
 }
-
-
 
 //-------------------------------------------------------------------------------------------------
 void QTDialogSample::Update()

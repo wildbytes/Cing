@@ -45,6 +45,8 @@ void draw()
 
 void end()
 {
+	delete qtApp;
+	delete dialog;
 }
 
 void mousePressed()
