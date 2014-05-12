@@ -129,6 +129,7 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp" />
     <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/Zm118  %(AdditionalOptions)</AdditionalOptions>
@@ -244,6 +245,8 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\Phidgets-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGeneratorTechniqueResolverListener.h" />
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h" />
