@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundManagerFMOD.cpp" />
@@ -225,6 +226,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioPrereqs.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.h" />

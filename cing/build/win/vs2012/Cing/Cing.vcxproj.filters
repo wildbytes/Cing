@@ -172,6 +172,9 @@
     <Filter Include="cing_ings\Phidgets">
       <UniqueIdentifier>{9695d2a6-bca2-496e-a8a8-a383d4617ce4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="cing_ings\Emotiv">
+      <UniqueIdentifier>{35742443-76df-4fbd-b59e-c102a58a45dd}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material">
@@ -463,6 +466,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.cpp">
       <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.cpp">
+      <Filter>cing_ings\Emotiv</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -844,6 +850,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.h">
       <Filter>cing_ings\Phidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h">
+      <Filter>cing_ings\Emotiv</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
