@@ -470,6 +470,9 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.cpp">
       <Filter>cing_ings\Emotiv</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.cpp">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
@@ -853,6 +856,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h">
       <Filter>cing_ings\Emotiv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.h">
+      <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

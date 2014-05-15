@@ -160,7 +160,7 @@ namespace Cing
 		CPhidgetMotorControl_set_OnCurrentChange_Handler (m_motoControl, CurrentChangeHandler, NULL);
 
 		//open the motor control for device connections
-		CPhidget_open((CPhidgetHandle)m_motoControl, -1);
+		CPhidget_open((CPhidgetHandle)m_motoControl, serialNumber);
 
 		//get the program to wait for a motor control device to be attached
 		LOG("Waiting for MotorControl to be attached....");
