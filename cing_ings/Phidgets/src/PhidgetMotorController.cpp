@@ -34,39 +34,8 @@
 namespace Cing
 {
 	/**
-		PHIDGETS HANDLERS
+		PHIDGETS HANDLERS (specific to motor controller)
 	**/
-	int CCONV AttachHandler(CPhidgetHandle MC, void *userptr)
-	{
-		int serialNo;
-		const char *name;
-
-		CPhidget_getDeviceName (MC, &name);
-		CPhidget_getSerialNumber(MC, &serialNo);
-		LOG("%s %10d attached!\n", name, serialNo);
-
-		return 0;
-	}
-
-	int CCONV DetachHandler(CPhidgetHandle MC, void *userptr)
-	{
-		int serialNo;
-		const char *name;
-
-		CPhidget_getDeviceName (MC, &name);
-		CPhidget_getSerialNumber(MC, &serialNo);
-		LOG("%s %10d detached!\n", name, serialNo);
-
-		return 0;
-	}
-
-	int CCONV ErrorHandler(CPhidgetHandle MC, void *userptr, int ErrorCode, const char *Description)
-	{
-		LOG("Error handled. %d - %s\n", ErrorCode, Description);
-		return 0;
-	}
-
-
 	int CCONV InputChangeHandler(CPhidgetMotorControlHandle MC, void *usrptr, int Index, int State)
 	{
 		LOG("Input %d > State: %d\n", Index, State);
@@ -75,43 +44,21 @@ namespace Cing
 
 	int CCONV VelocityChangeHandler(CPhidgetMotorControlHandle MC, void *usrptr, int Index, double Value)
 	{
-		LOG("Motor %d > Current Speed: %f\n", Index, Value);
+		LOG_TRIVIAL("Motor %d > Current Speed: %f\n", Index, Value);
 		return 0;
 	}
 
 	int CCONV CurrentChangeHandler(CPhidgetMotorControlHandle MC, void *usrptr, int Index, double Value)
 	{
-		LOG("Motor: %d > Current Draw: %f\n", Index, Value);
+		LOG_TRIVIAL("Motor: %d > Current Draw: %f\n", Index, Value);
 		return 0;
 	}
-
-	int display_properties(CPhidgetMotorControlHandle phid)
-	{
-		int serialNo, version, numInputs, numMotors;
-		const char* ptr;
-
-		CPhidget_getDeviceType((CPhidgetHandle)phid, &ptr);
-		CPhidget_getSerialNumber((CPhidgetHandle)phid, &serialNo);
-		CPhidget_getDeviceVersion((CPhidgetHandle)phid, &version);
-	
-		CPhidgetMotorControl_getInputCount(phid, &numInputs);
-		CPhidgetMotorControl_getMotorCount(phid, &numMotors);
-
-		LOG("%s\n", ptr);
-		LOG("Serial Number: %10d\nVersion: %8d\n", serialNo, version);
-		LOG("# Inputs: %d\n# Motors: %d\n", numInputs, numMotors);
-
-		return 0;
-	}
-
-
-
 
 	/** 
 	 * Constructor, not much for now.
 	 */
 	PhidgetMotorController::PhidgetMotorController()
-		: m_isValid(false), m_motoControl(NULL)
+		: m_motoControl(NULL)
 	{
 	}
 
@@ -135,17 +82,8 @@ namespace Cing
 			return false;
 		}
 
-
-		int result;
-		const char *err;
-
 		//create the motor control object
 		CPhidgetMotorControl_create(&m_motoControl);
-
-		//Set the handlers to be run when the device is plugged in or opened from software, unplugged or closed from software, or generates an error.
-		CPhidget_set_OnAttach_Handler((CPhidgetHandle)m_motoControl, AttachHandler, NULL);
-		CPhidget_set_OnDetach_Handler((CPhidgetHandle)m_motoControl, DetachHandler, NULL);
-		CPhidget_set_OnError_Handler((CPhidgetHandle)m_motoControl, ErrorHandler, NULL);
 
 		//Registers a callback that will run if an input changes.
 		//Requires the handle for the Phidget, the function that will be called, and a arbitrary pointer that will be supplied to the callback function (may be NULL).
@@ -159,28 +97,9 @@ namespace Cing
 		//Requires the handle for the Phidget, the function that will be called, and a arbitrary pointer that will be supplied to the callback function (may be NULL).
 		CPhidgetMotorControl_set_OnCurrentChange_Handler (m_motoControl, CurrentChangeHandler, NULL);
 
-		//open the motor control for device connections
-		CPhidget_open((CPhidgetHandle)m_motoControl, serialNumber);
 
-		//get the program to wait for a motor control device to be attached
-		LOG("Waiting for MotorControl to be attached....");
-		if((result = CPhidget_waitForAttachment((CPhidgetHandle)m_motoControl, 10000)))
-		{
-			CPhidget_getErrorDescription(result, &err);
-			LOG("Problem waiting for attachment: %s\n", err);
-			return 0;
-		}
-
-		//Display the properties of the attached motor control device
-		display_properties(m_motoControl);
-
-		//read motor control event data
-		LOG("Conection to motor(s) up and running...\n");
-
-
-		// all good
-		m_isValid = true;
-		return true;
+		// Open the connection with the board
+		return PhidgetControllerBase::init(serialNumber);
 	}
 
 	/** 
@@ -199,14 +118,8 @@ namespace Cing
 		setVelocity(0, 0);
 		setVelocity(1, 0);
 
-		// Close motor connection
-		LOG( "PhidgetMotorController Closing connection with the motors" );
-		CPhidget_close((CPhidgetHandle)m_motoControl);
-		CPhidget_delete((CPhidgetHandle)m_motoControl);
 
-
-		// all good
-		m_isValid = false;
+		PhidgetControllerBase::end();
 	}
 
 
@@ -237,8 +150,26 @@ namespace Cing
 		}
 
 		CPhidgetMotorControl_setAcceleration (m_motoControl, motorIndex, acc);
+	}
 
+	/** 
+	  * Prints info about this motor
+	  */
+	void PhidgetMotorController::displayProperties()
+	{
+		int serialNo, version, numInputs, numMotors;
+		const char* ptr;
 
+		CPhidget_getDeviceType(getPhidgetHandle(), &ptr);
+		CPhidget_getSerialNumber(getPhidgetHandle(), &serialNo);
+		CPhidget_getDeviceVersion(getPhidgetHandle(), &version);
+	
+		CPhidgetMotorControl_getInputCount(m_motoControl, &numInputs);
+		CPhidgetMotorControl_getMotorCount(m_motoControl, &numMotors);
+
+		LOG("%s\n", ptr);
+		LOG("Serial Number: %10d\nVersion: %8d\n", serialNo, version);
+		LOG("# Inputs: %d\n# Motors: %d\n", numInputs, numMotors);
 	}
 
 

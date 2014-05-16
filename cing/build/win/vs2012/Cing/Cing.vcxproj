@@ -131,6 +131,8 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp" />
     <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
@@ -249,6 +251,8 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\Phidgets-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h" />

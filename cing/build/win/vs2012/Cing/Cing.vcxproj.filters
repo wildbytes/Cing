@@ -473,6 +473,12 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.cpp">
       <Filter>cing_ings\Phidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.cpp">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.cpp">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
@@ -858,6 +864,12 @@
       <Filter>cing_ings\Emotiv</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.h">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.h">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.h">
       <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
   </ItemGroup>

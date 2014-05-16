@@ -29,36 +29,35 @@
 
 #include "PhidgetControllerBase.h"
 
+
 namespace Cing
 {
 
 /**
- * @brief Access and control to a motor controller phidget board: http://www.phidgets.com/docs/1064_User_Guide
+ * @brief Access and control to a LED controller phidget board
  */
-class PhidgetAnalogOutController: public PhidgetControllerBase
+class PhidgetLEDController: public PhidgetControllerBase
 {
 public:
 
 	// Constructor / Destructor
-	PhidgetAnalogOutController();
-	~PhidgetAnalogOutController();
+	PhidgetLEDController();
+	~PhidgetLEDController();
 
 	// Init / Release / Update
 	bool	init	( int serialNumber = -1);
 	void    end     ();
 
 	// Control
-	void	setEnabled		( int index, bool enabled );
-	void	setVoltage		( int index, double voltage );
+	void	setBrightness( int index, double brightness );
 
 	// base required overwrides
-	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_analogOut; };
+	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_LEDControl; };
 	void			displayProperties	();
 
 private:
 
-	CPhidgetAnalogHandle		m_analogOut;
-	bool						m_isValid;
+	CPhidgetLEDHandle	m_LEDControl; // LED board control handle
 };
 
 } // namespace Cing

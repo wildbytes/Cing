@@ -27,38 +27,40 @@
 
 #pragma once
 
-#include "PhidgetControllerBase.h"
+#include "Phidgets/lib/include/phidget21.h"
+
 
 namespace Cing
 {
 
 /**
- * @brief Access and control to a motor controller phidget board: http://www.phidgets.com/docs/1064_User_Guide
+ * @brief Base class for all phidget controller board: http://www.phidgets.com/docs/1064_User_Guide
  */
-class PhidgetAnalogOutController: public PhidgetControllerBase
+class PhidgetControllerBase
 {
 public:
 
 	// Constructor / Destructor
-	PhidgetAnalogOutController();
-	~PhidgetAnalogOutController();
+	PhidgetControllerBase();
+	virtual ~PhidgetControllerBase();
 
-	// Init / Release / Update
-	bool	init	( int serialNumber = -1);
+	// Init will open the connection with the board. The derived class MUST have the CPhidgetHandle already created (for the specific board)
+	bool	init	( int serialNumber = -1, int connectionTimeOutMillis = 2000);
 	void    end     ();
 
-	// Control
-	void	setEnabled		( int index, bool enabled );
-	void	setVoltage		( int index, double voltage );
+	// Event handlers (may be overwritten)
+	virtual void attachHandler	(CPhidgetHandle MC, void *userptr)	{}
+	virtual void detachHandler	(CPhidgetHandle MC, void *userptr)	{}
+	virtual void errorHandler	(CPhidgetHandle MC, void *userptr, int errorCode, const char *description) {}
 
-	// base required overwrides
-	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_analogOut; };
-	void			displayProperties	();
+	// Main phidget handler(should be overwritten)
+	virtual CPhidgetHandle	getPhidgetHandle()	= 0;
+	virtual void			displayProperties() = 0;
 
-private:
+protected:
+	int						m_serialNumber;
+	bool					m_isValid;
 
-	CPhidgetAnalogHandle		m_analogOut;
-	bool						m_isValid;
 };
 
 } // namespace Cing

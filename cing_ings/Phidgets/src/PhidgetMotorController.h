@@ -27,7 +27,7 @@
 
 #pragma once
 
-#include "Phidgets/lib/include/phidget21.h"
+#include "PhidgetControllerBase.h"
 
 
 namespace Cing
@@ -36,7 +36,7 @@ namespace Cing
 /**
  * @brief Access and control to a motor controller phidget board: http://www.phidgets.com/docs/1064_User_Guide
  */
-class PhidgetMotorController
+class PhidgetMotorController: public PhidgetControllerBase
 {
 public:
 
@@ -52,10 +52,13 @@ public:
 	void	setVelocity		( int motorIndex, double velocity );
 	void	setAcceleration	( int motorIndex, double acc );
 
+	// base required overwrides
+	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_motoControl; };
+	void			displayProperties	();
+
 private:
 
 	CPhidgetMotorControlHandle	m_motoControl; // Motor control handle
-	bool						m_isValid;
 };
 
 } // namespace Cing

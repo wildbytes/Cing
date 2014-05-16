@@ -35,4 +35,6 @@
 // Phidgets
 #include "Phidgets/lib/include/phidget21.h"
 #include "PhidgetMotorController.h"
+#include "PhidgetAnalogOutController.h"
+#include "PhidgetLEDController.h"
 

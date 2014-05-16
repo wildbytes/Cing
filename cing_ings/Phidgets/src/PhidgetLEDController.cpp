@@ -28,25 +28,27 @@
 // Precompiled headers
 #include "Cing-Precompiled.h"
 
-#include "PhidgetAnalogOutController.h"
+#include "PhidgetLEDController.h"
 #include "common/LogManager.h"
-#include "common/MathUtils.h"
 
 namespace Cing
 {
+	/**
+		PHIDGETS HANDLERS (specific to motor controller)
+	**/
 
 	/** 
 	 * Constructor, not much for now.
 	 */
-	PhidgetAnalogOutController::PhidgetAnalogOutController()
-		: m_isValid(false), m_analogOut(NULL)
+	PhidgetLEDController::PhidgetLEDController()
+		: m_LEDControl(NULL)
 	{
 	}
 
 	/** 
 	 * Destructor, releases resources
 	 */
-	PhidgetAnalogOutController::~PhidgetAnalogOutController()
+	PhidgetLEDController::~PhidgetLEDController()
 	{
 		end();
 	}
@@ -54,17 +56,17 @@ namespace Cing
 	/** 
 	 * Inits connection with the motor
 	 */
-	bool PhidgetAnalogOutController::init( int serialNumber /*= -1*/)
+	bool PhidgetLEDController::init( int serialNumber /*= -1*/)
 	{
 		// If it has already been init, do nothing
 		if ( m_isValid )
 		{
-			LOG( "PhidgetAnalogOutController::init(). This analog controller was init already --> Doing nothing" );
+			LOG( "PhidgetLEDController::init(). This motor controller was init already --> Doing nothing" );
 			return false;
 		}
 
-		//create the analog out control object
-		CPhidgetAnalog_create(&m_analogOut);
+		//create the LED object
+		CPhidgetLED_create(&m_LEDControl);
 
 		// Open the connection with the board
 		return PhidgetControllerBase::init(serialNumber);
@@ -73,83 +75,60 @@ namespace Cing
 	/** 
 	 * Releases the connection with the motor and resources
 	 */
-	void PhidgetAnalogOutController::end()
+	void PhidgetLEDController::end()
 	{
 		// If it has already been init, do nothing
-		if ( !m_isValid || !m_analogOut )
+		if ( !m_isValid || !m_LEDControl )
 		{
-			LOG( "PhidgetAnalogOutController::end(). This controller was released already --> Doing nothing" );
+			LOG( "PhidgetLEDController::end(). This motor controller was released already --> Doing nothing" );
 			return;
 		}
 
-		// Disable all outputs
-		setEnabled(0, false);
-		setEnabled(1, false);
-		setEnabled(2, false);
-		setEnabled(3, false);
+		// Turn off all the LEDs
+		int numLED = 0;
+		CPhidgetLED_getLEDCount(m_LEDControl, &numLED);
+		for( int i = 0; i < numLED; ++i )
+		{
+			setBrightness(i, 0);
+		}
 
 		PhidgetControllerBase::end();
 	}
 
+
 	/** 
-	 * Enables or disasbles a specific output
+	 * Sets the brightness for a specific LED output
+	 * @note maximum brightness is 100, 0 is off.  Can set this value to anything including and inbetween these values.
 	 */
-	void PhidgetAnalogOutController::setEnabled( int index, bool enabled )
+	void PhidgetLEDController::setBrightness( int index, double brightness )
 	{
-		if ( !m_isValid || !m_analogOut )
+		if ( !m_isValid || !m_LEDControl)
 		{
-			LOG_CRITICAL( "PhidgetAnalogOutController::setEnabled(). ERROR: Analog controller  is not initialized. Call init first." );
+			LOG_CRITICAL( "PhidgetLEDController::setVelocity(). ERROR LED board is not initialized. Call init first." );
 			return;
 		}
 
-		if ( enabled )
-			CPhidgetAnalog_setEnabled(m_analogOut, index, PTRUE);
-		else
-			CPhidgetAnalog_setEnabled(m_analogOut, index, PFALSE);
-
+		CPhidgetLED_setBrightness (m_LEDControl, index, brightness);
 	}
 
-	/** 
-	 * Sets the acceleration for a specific motor
-	 */
-	void PhidgetAnalogOutController::setVoltage( int index, double voltage )
-	{
-		if ( !m_isValid || !m_analogOut )
-		{
-			LOG_CRITICAL( "PhidgetAnalogOutController::setVoltage(). ERROR: Analog controller  is not initialized. Call init first." );
-			return;
-		}
-
-		// clamp just in case
-		double max, min;
-		CPhidgetAnalog_getVoltageMax(m_analogOut, index, &max);
-		CPhidgetAnalog_getVoltageMin(m_analogOut, index, &min);
-		voltage = constrain(voltage, min, max);
-
-		// set the voltage
-		CPhidgetAnalog_setVoltage(m_analogOut, index, voltage);
-
-	}
 
 	/** 
-	  * Prints info about this controller
+	  * Prints info about this motor
 	  */
-	void PhidgetAnalogOutController::displayProperties()
+	void PhidgetLEDController::displayProperties()
 	{
-		int serialNo, version, numAnalog;
-		double max, min;
+		int serialNo, version, numLED;
 		const char* ptr;
 
 		CPhidget_getDeviceType(getPhidgetHandle(), &ptr);
 		CPhidget_getSerialNumber(getPhidgetHandle(), &serialNo);
 		CPhidget_getDeviceVersion(getPhidgetHandle(), &version);
-		CPhidgetAnalog_getOutputCount(m_analogOut, &numAnalog);
-		CPhidgetAnalog_getVoltageMax(m_analogOut, 0, &max);
-		CPhidgetAnalog_getVoltageMin(m_analogOut, 0, &min);
+		CPhidgetLED_getLEDCount(m_LEDControl, &numLED);
 
 		printf("%s\n", ptr);
 		printf("Serial Number: %10d\nVersion: %8d\n", serialNo, version);
-		printf("# Analog Outputs: %d\n", numAnalog);
-		printf("Output range: -%0.1lfV - %0.1lfV\n",min,max);
+		printf("# LEDs: %d\n", numLED);
 	}
+
+
 }
