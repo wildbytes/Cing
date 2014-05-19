@@ -39,7 +39,7 @@ namespace Cing
 	 * Constructor, not much for now.
 	 */
 	PhidgetAnalogOutController::PhidgetAnalogOutController()
-		: m_isValid(false), m_analogOut(NULL)
+		: m_analogOut(NULL)
 	{
 	}
 
@@ -62,6 +62,8 @@ namespace Cing
 			LOG( "PhidgetAnalogOutController::init(). This analog controller was init already --> Doing nothing" );
 			return false;
 		}
+
+		LOG( "Connecting to Phidget Analog out board" );
 
 		//create the analog out control object
 		CPhidgetAnalog_create(&m_analogOut);

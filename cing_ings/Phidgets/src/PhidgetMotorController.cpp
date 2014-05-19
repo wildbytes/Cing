@@ -82,6 +82,9 @@ namespace Cing
 			return false;
 		}
 
+		LOG( "Connecting to Phidget Motor control board" );
+
+
 		//create the motor control object
 		CPhidgetMotorControl_create(&m_motoControl);
 

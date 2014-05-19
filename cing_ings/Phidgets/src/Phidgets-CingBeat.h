@@ -37,4 +37,4 @@
 #include "PhidgetMotorController.h"
 #include "PhidgetAnalogOutController.h"
 #include "PhidgetLEDController.h"
-
+#include "PhidgetInterfaceKitController.h"

@@ -66,6 +66,7 @@ namespace Cing
 		}
 
 		//create the LED object
+		LOG( "Connecting to Phidget LED board" );
 		CPhidgetLED_create(&m_LEDControl);
 
 		// Open the connection with the board

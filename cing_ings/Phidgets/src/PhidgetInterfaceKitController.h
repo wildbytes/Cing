@@ -33,31 +33,31 @@ namespace Cing
 {
 
 /**
- * @brief Access and control to a motor controller phidget board: http://www.phidgets.com/docs/1064_User_Guide
+ * @brief Access and control to a Interface Kit 0/0/4 to control high power devices like a light bulb
  */
-class PhidgetAnalogOutController: public PhidgetControllerBase
+class PhidgetInterfaceKitController: public PhidgetControllerBase
 {
 public:
 
 	// Constructor / Destructor
-	PhidgetAnalogOutController();
-	~PhidgetAnalogOutController();
+	PhidgetInterfaceKitController();
+	~PhidgetInterfaceKitController();
 
 	// Init / Release / Update
 	bool	init	( int serialNumber = -1);
 	void    end     ();
 
 	// Control
-	void	setEnabled		( int index, bool enabled );
-	void	setVoltage		( int index, double voltage );
+	void	setDigitalOutEnabled	( int index, bool enabled );
+	bool	getDigitalOutEnabled	( int index );
 
 	// base required overwrides
-	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_analogOut; };
+	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_interfaceKit; };
 	void			displayProperties	();
 
 private:
 
-	CPhidgetAnalogHandle		m_analogOut;
+	CPhidgetInterfaceKitHandle	m_interfaceKit;
 };
 
 } // namespace Cing
