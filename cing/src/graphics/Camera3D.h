@@ -28,8 +28,8 @@
 #ifndef _Camera_H_
 #define _Camera_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 

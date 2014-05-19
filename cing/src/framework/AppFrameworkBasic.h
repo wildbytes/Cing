@@ -28,8 +28,8 @@
 #ifndef _AppFrameworkBasic_H_
 #define _AppFrameworkBasic_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 

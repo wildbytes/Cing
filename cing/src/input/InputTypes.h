@@ -28,8 +28,8 @@
 #ifndef _InputTypes_h_
 #define _InputTypes_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "InputPrereqs.h"
 #include "OISKeyboard.h"

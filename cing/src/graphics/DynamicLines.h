@@ -27,8 +27,8 @@ Code from: http://www.ogre3d.org/wiki/index.php/DynamicLineDrawing
 #ifndef _DYNAMIC_LINES_H_
 #define _DYNAMIC_LINES_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "DynamicRenderable.h"
 #include <vector>

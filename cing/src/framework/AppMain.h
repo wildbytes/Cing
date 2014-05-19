@@ -28,8 +28,8 @@
 #ifndef _APP_MAIN_H_
 #define _APP_MAIN_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #if OGRE_PLATFORM == OGRE_PLATFORM_APPLE
 #include "AppFrameworkCocoa.h"

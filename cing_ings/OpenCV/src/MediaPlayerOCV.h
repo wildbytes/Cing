@@ -28,8 +28,8 @@
 #ifndef _MediaPlayerOCV_H_
 #define _MediaPlayerOCV_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 // Graphics

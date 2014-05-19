@@ -28,8 +28,8 @@
 #ifndef _BaseCameraInput_H_
 #define _BaseCameraInput_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "CameraInputPrereqs.h"

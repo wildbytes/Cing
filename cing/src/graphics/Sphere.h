@@ -28,8 +28,8 @@
 #ifndef _Sphere_h_
 #define _Sphere_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

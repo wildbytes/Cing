@@ -29,8 +29,8 @@
 #ifndef __Cing__RTTRectSaveManager__H__
 #define __Cing__RTTRectSaveManager__H__
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include <string>
 #include "common/Singleton.h"

@@ -28,8 +28,8 @@
 #ifndef _PhysicsBox_h_
 #define _PhysicsBox_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "PhysicsPrereqs.h"
 #include "PhysicsObject.h"

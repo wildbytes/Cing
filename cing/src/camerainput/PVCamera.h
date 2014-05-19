@@ -28,8 +28,8 @@
 #ifndef _PVCamera_H_
 #define _PVCamera_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "CameraInputPrereqs.h"
 #include "BaseCameraInput.h"

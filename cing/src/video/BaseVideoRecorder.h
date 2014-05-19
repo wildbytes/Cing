@@ -1,8 +1,8 @@
 #ifndef _BaseVideoRecorder_H_
 #define _BaseVideoRecorder_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 // Cing
 #include "graphics/GraphicsPrereqs.h"

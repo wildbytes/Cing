@@ -22,8 +22,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Image_Animation_H_
 #define _Image_Animation_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

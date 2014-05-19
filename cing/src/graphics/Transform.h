@@ -22,8 +22,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Cing_Transform_H_
 #define _Cing_Transform_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 #include "Common/CommonTypes.h"

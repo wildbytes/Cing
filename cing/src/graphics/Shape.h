@@ -22,8 +22,8 @@
 #ifndef _Shape_H_
 #define _Shape_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 #include "Color.h"

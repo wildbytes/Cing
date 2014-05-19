@@ -1,7 +1,7 @@
 #ifndef _WINDOWS_EVENT_LOGGER
 #define _WINDOWS_EVENT_LOGGER
 
-#include "Cing-Precompiled.h"
+
 
 #if defined(WIN32)
 

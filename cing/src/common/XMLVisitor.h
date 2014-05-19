@@ -22,8 +22,8 @@ Copyright (c) 2008-2009 Julio Obelleiro and Jorge Cano
 #ifndef _XMLVisitor_H_
 #define _XMLVisitor_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "CommonPrereqs.h"

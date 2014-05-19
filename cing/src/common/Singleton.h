@@ -33,8 +33,8 @@
  * @file Singleton related utilities
  */
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "CommonPrereqs.h"
