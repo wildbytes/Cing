@@ -479,6 +479,15 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.cpp">
       <Filter>cing_ings\Phidgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\BackupSignalGenerator.cpp">
+      <Filter>cing_ings\Emotiv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\RingBuffer.cpp">
+      <Filter>cing_ings\Emotiv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.cpp">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
@@ -860,9 +869,6 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.h">
       <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h">
-      <Filter>cing_ings\Emotiv</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.h">
       <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
@@ -870,6 +876,18 @@
       <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.h">
+      <Filter>cing_ings\Phidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h">
+      <Filter>cing_ings\Emotiv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\BackupSignalGenerator.h">
+      <Filter>cing_ings\Emotiv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\RingBuffer.h">
+      <Filter>cing_ings\Emotiv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.h">
       <Filter>cing_ings\Phidgets</Filter>
     </ClInclude>
   </ItemGroup>
