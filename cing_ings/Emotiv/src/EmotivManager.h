@@ -31,9 +31,23 @@
 #include "Emotiv/lib/include/edk.h"
 #include "Emotiv/lib/include/edkErrorCode.h"
 
+#include "common/XMLSettings.h"
+
 
 namespace Cing
 {
+
+	enum SignalQuality
+	{
+		E_DISCONNECTED = -1,	// no data or no user or the headset is off
+		E_POOR_QUALITY = 0,		// have user and data is being received, but wireless signal is not acceptable
+		E_MEDIUM_QUALITY,		// have user and data, but affective or engagement data are disabled due to noisy signals
+		E_HIGH_QUALITY,			// all good. NOTE: this does not take into account the quality of each of the sensor contacts in the emotiv's headset.
+
+		E_SIGNALQUALITY_COUNT
+	};
+
+
 
 /**
  * @brief Access to Emotiv's Epoc and EEG brain sensor interfaces
@@ -47,34 +61,65 @@ public:
 	~EmotivManager();
 
 	// Init / Release / Update
-	bool	init	();
+	bool	init	( const std::string& xmlConfigFile = "" );
 	void    end     ();
 	void	update	();
 
 	// Getters
-	double	getNormalizedFrustration()			const { return m_normalizedFrustration; }
-	double	getNormalizedEngagement()			const { return m_normalizedEngagement; }
-	double	getNormalizedMeditation()			const { return m_normalizedMeditation; }
-	double	getNormalizedExcitementShortTerm()	const { return m_normalizedExcitementShortTerm; }
+	double				getNormalizedFrustration()			const { return m_normalizedFrustration; }
+	double				getNormalizedEngagement()			const { return m_normalizedEngagement; }
+	double				getNormalizedMeditation()			const { return m_normalizedMeditation; }
+	double				getNormalizedExcitementShortTerm()	const { return m_normalizedExcitementShortTerm; }
+
+	EE_SignalStrength_t	getWirelessSignalStrength()			const { return m_wirelessSignalStatus; }
+	SignalQuality		getSignalQuality()					const;
+
+	// Does it have alpha, beta, etc waves data?
+	bool				hasValidSpectralAnalysis()			const { return false; }
 
 private:
 	// private methods
+	bool	connectToEmotivEngine();
 	void	updateAffectiveData();
 	void	caculateScale(double& rawScore, double& maxScale, double& minScale, double& scaledScore);
+	void	captureEEGData();
 
 	// private attributes
+
+	XMLSettings					m_xmlSettings;
 
 	// General Emotiv 
 	EmoEngineEventHandle		m_eEvent;
 	EmoStateHandle				m_eState;
+	bool						m_connectToEmoComposer;
+	std::string					m_emoComposerIp;
+
+	// Global status
+	EE_SignalStrength_t			m_wirelessSignalStatus;
+	bool						m_userConnected;	// we need an user to retrieve data...
+	bool						m_headSetOn;		// true if the headset switch (physical switch) is on.
+	bool						m_receivingData;	// true if we are receiving data from the headset.
+	float						m_timeStampLastReceivedData;
+
+	// Affectiv suite status (some of the parameters might be disabled if the signal is too noisy).
+	bool						m_affectivEngagementEnabled;
+	bool						m_affectivExcitementEnabled;
+	bool						m_affectivFrustrationEnabled;
+	bool						m_affectivMeditationEnabled;
 
 	// Affective suite
-	float						m_timmeStapLastAffectiveData;
 	double						m_minFrustration, m_maxFrustration, m_rawFrustration, m_normalizedFrustration;
 	double						m_minEngagement, m_maxEngagement, m_rawEngagement, m_normalizedEngagement; // Boredom would be the opposite of Engagement for the Emotive Affective suite
 	double						m_minMeditation, m_maxMeditation, m_rawMeditation, m_normalizedMeditation;
 	double						m_minExcitementShortTerm, m_maxExcitementShortTerm, m_rawExcitementShortTerm, m_normalizedExcitementShortTerm;
+	double						m_normalizedExcitementLongTerm;
 	
+	// EEG Data capture
+	DataHandle					m_hData;
+	bool						m_readyToCollectEEGData;
+
+	// Other
+	const int					m_emoComposerPort;
 	bool						m_isValid;
 };
 
