@@ -2,6 +2,7 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros">
+    <CING_ROOT>../cing/cing/</CING_ROOT>
     <QTDIR>$(CING_ROOT)../cing_ings/QT</QTDIR>
   </PropertyGroup>
   <PropertyGroup />
@@ -25,6 +26,9 @@ xcopy "$(CING_INGS_ROOT)QT\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <BuildMacro Include="CING_ROOT">
+      <Value>$(CING_ROOT)</Value>
+    </BuildMacro>
     <BuildMacro Include="QTDIR">
       <Value>$(QTDIR)</Value>
     </BuildMacro>
