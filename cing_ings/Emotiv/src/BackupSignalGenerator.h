@@ -24,13 +24,15 @@ namespace Cing
 	{
 	public:
 
-		const static int NumValuesToGenerate = 5;		//< Alpha, Beta, Delta, Theta y Gamma
-		const static int BufferSize = 128;
+		const static int NumValuesToGenerate = 6;		//< Alpha, Beta, Delta, Theta y Gamma / Attention
+		const static int BufferSize = 5;
 		static float DefaultRandomDiffMultiplier;
 
 	public:
 		BackupSignalGenerator();
 		~BackupSignalGenerator();
+
+		void setUpdateFrequency( float timeBetweenGenerations ) { m_timeBetweenGenerations = timeBetweenGenerations; }
 
 		// Updates the values with new generated values, but only once every X seconds
 		void	update(float weights[NumValuesToGenerate]);
@@ -44,6 +46,7 @@ namespace Cing
 		float	getGammaValue() const { return	m_gamma.GetAverage(); }
 		float	getDeltaValue() const { return	m_delta.GetAverage(); }
 		float	getThetaValue() const { return	m_theta.GetAverage(); }
+		float	getAttentionValue() const { return	m_attention.GetAverage(); }
 
 	private:
 		// Inits the average and max values used for the calculations
@@ -53,6 +56,10 @@ namespace Cing
 		float generateValue(float lastVal, float avgVal, float maxOffset, float multiplier);
 
 	private:
+
+		float m_timer;
+		float m_timeBetweenGenerations;
+
 		float m_averageValue[NumValuesToGenerate];
 		float m_maxValue[NumValuesToGenerate];
 		float m_randomDiffMultiplier[NumValuesToGenerate];
@@ -64,6 +71,7 @@ namespace Cing
 		RingBuffer m_gamma;
 		RingBuffer m_delta;
 		RingBuffer m_theta;
+		RingBuffer m_attention;
 
 	};
 
