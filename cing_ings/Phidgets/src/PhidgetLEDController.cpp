@@ -81,7 +81,7 @@ namespace Cing
 		// If it has already been init, do nothing
 		if ( !m_isValid || !m_LEDControl )
 		{
-			LOG( "PhidgetLEDController::end(). This motor controller was released already --> Doing nothing" );
+			LOG( "PhidgetLEDController::end(). This LED controller was released already --> Doing nothing" );
 			return;
 		}
 
@@ -105,11 +105,28 @@ namespace Cing
 	{
 		if ( !m_isValid || !m_LEDControl)
 		{
-			LOG_CRITICAL( "PhidgetLEDController::setVelocity(). ERROR LED board is not initialized. Call init first." );
+			LOG_CRITICAL( "PhidgetLEDController::setBrightness(). ERROR LED board is not initialized. Call init first." );
 			return;
 		}
 
 		CPhidgetLED_setBrightness (m_LEDControl, index, brightness);
+	}
+
+	/** 
+	 * Returns the brightness for a specific LED output
+	 * @note maximum brightness is 100, 0 is off.  Can set this value to anything including and inbetween these values.
+	 */
+	double PhidgetLEDController::getBrightness( int index )
+	{
+		if ( !m_isValid || !m_LEDControl)
+		{
+			LOG_CRITICAL( "PhidgetLEDController::getBrightness(). ERROR LED board is not initialized. Call init first." );
+			return 0.0;
+		}
+
+		double brightness;
+		CPhidgetLED_getBrightness (m_LEDControl, index, &brightness);
+		return brightness;
 	}
 
 

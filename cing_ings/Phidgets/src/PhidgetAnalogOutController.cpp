@@ -129,6 +129,7 @@ namespace Cing
 		voltage = constrain(voltage, min, max);
 
 		// set the voltage
+		setEnabled(index, true);
 		CPhidgetAnalog_setVoltage(m_analogOut, index, voltage);
 
 	}

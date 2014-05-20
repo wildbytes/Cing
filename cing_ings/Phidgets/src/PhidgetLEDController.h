@@ -50,6 +50,7 @@ public:
 
 	// Control
 	void	setBrightness( int index, double brightness );
+	double	getBrightness( int index );
 
 	// base required overwrides
 	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_LEDControl; };
