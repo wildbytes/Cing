@@ -202,7 +202,7 @@ namespace Cing
 				case EE_EmoStateUpdated:
 					EE_EmoEngineEventGetEmoState(m_eEvent, m_eState);
 
-					LOG("%10.3fs : New Affectiv score from user %d ...\r", m_timeStampLastReceivedData, userID);
+					//LOG("%10.3fs : New Affectiv score from user %d ...\r", m_timeStampLastReceivedData, userID);
 					
 					// read affective data
 					updateAffectiveData();
@@ -367,7 +367,7 @@ namespace Cing
 		unsigned int nSamplesTaken=0;
 		EE_DataGetNumberOfSample(m_hData,&nSamplesTaken);
 		
-		LOG( "EEG data Updated. Number of samples: %d", nSamplesTaken );
+		//LOG( "EEG data Updated. Number of samples: %d", nSamplesTaken );
 						
 
 		if (nSamplesTaken != 0  ) {
@@ -377,7 +377,7 @@ namespace Cing
 				for (int i = 0 ; i<sizeof(targetChannelList)/sizeof(EE_DataChannel_t) ; i++) {
 
 					EE_DataGet(m_hData, targetChannelList[i], data, nSamplesTaken);
-					LOG( "Data: %f", data[sampleIdx] );
+					//LOG( "Data: %f", data[sampleIdx] );
 				}	
 			}
 			delete[] data;							
