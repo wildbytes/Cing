@@ -38,6 +38,7 @@ namespace Cing
 		void	update(float weights[NumValuesToGenerate]);
 
 		void	setAverageValue(int index, float value)	{ m_averageValue[index] = value; }
+		float	getAverageValue(int index)	{ return m_averageValue[index]; }
 		void	setMaxValue(int index, float value)		{ m_maxValue[index] = value; }
 
 		// Getters for the different buffers
