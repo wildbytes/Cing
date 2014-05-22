@@ -92,13 +92,12 @@ namespace Cing
 		}
 
 		// Load parameters from xml or default if no xml received
-		m_connectToEmoComposer	= false;
 		m_emoComposerIp	= "127.0.0.1";
 		if ( xmlConfigFile != ""  )
 		{
 			if ( m_xmlSettings.load( xmlConfigFile ) )
 			{
-				m_emoComposerIp	= m_xmlSettings.getBool( "ConnectToEmoComposer", false );
+				m_connectToEmoComposer	= m_xmlSettings.getBool( "ConnectToEmoComposer", false );
 				m_emoComposerIp			= m_xmlSettings.get( "EmoComposerIP", "127.0.0.1" );
 			}
 		}
@@ -112,9 +111,9 @@ namespace Cing
 		m_isValid = connectToEmotivEngine();
 
 		// Prepare for EEG data capture
-		float secs = 1.0f;
-		m_hData = EE_DataCreate();
-		EE_DataSetBufferSizeInSec(secs);
+		//float secs = 1.0f;
+		//m_hData = EE_DataCreate();
+		//EE_DataSetBufferSizeInSec(secs);
 
 
 
@@ -164,6 +163,10 @@ namespace Cing
 		m_receivingData = (timestamp > 0.001f) && !equal(timestamp, m_timeStampLastReceivedData); // we have new data if the timestamp of the last data is not zero and it is different from our last update.
 		m_timeStampLastReceivedData = timestamp;
 
+		// TEST
+		m_receivingData = true;
+
+
 		// update affectiv suite detection status
 		m_affectivEngagementEnabled		= ES_AffectivIsActive(m_eState, AFF_ENGAGEMENT_BOREDOM) == 1;
 		m_affectivExcitementEnabled		= ES_AffectivIsActive(m_eState, AFF_EXCITEMENT) == 1;
@@ -211,7 +214,7 @@ namespace Cing
 		}
 
 		// Capture and process EEG data
-		captureEEGData();
+		//captureEEGData();
 	}
 
 	// Returns the signal quality of the connection with the headset
