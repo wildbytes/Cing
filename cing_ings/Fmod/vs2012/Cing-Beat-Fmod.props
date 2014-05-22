@@ -1,7 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
-  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Label="UserMacros">
+    <CING_ROOT>../cing/cing/</CING_ROOT>
+    <CING_INGS_ROOT>../cing/cing_ings/</CING_INGS_ROOT>
+  </PropertyGroup>
   <PropertyGroup />
   <ItemDefinitionGroup>
     <ClCompile>
@@ -17,5 +20,12 @@
 xcopy "$(CING_INGS_ROOT)Fmod\lib\bin\vs2012\*" "$(OutDir)" /i /f /y /s</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <BuildMacro Include="CING_ROOT">
+      <Value>$(CING_ROOT)</Value>
+    </BuildMacro>
+    <BuildMacro Include="CING_INGS_ROOT">
+      <Value>$(CING_INGS_ROOT)</Value>
+    </BuildMacro>
+  </ItemGroup>
 </Project>
