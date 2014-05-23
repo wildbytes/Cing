@@ -8,7 +8,35 @@
 
 namespace Cing
 {
-	float BackupSignalGenerator::DefaultRandomDiffMultiplier = 0.5f;
+	float BackupSignalGenerator::DefaultRandomDiffMultiplier = 1.0f;
+
+
+	template<typename T>
+	bool is_infinite( const T &value )
+	{
+		// Since we're a template, it's wise to use std::numeric_limits<T>
+		//
+		// Note: std::numeric_limits<T>::min() behaves like DBL_MIN, and is the smallest absolute value possible.
+		//
+ 
+		T max_value = std::numeric_limits<T>::max();
+		T min_value = - max_value;
+ 
+		return ! ( min_value <= value && value <= max_value );
+	}
+ 
+	template<typename T>
+	bool is_nan( const T &value )
+	{
+		// True if NAN
+		return value != value;
+	}
+ 
+	template<typename T>
+	bool is_valid( const T &value )
+	{
+		return ! is_infinite(value) && ! is_nan(value);
+	}
 
 	//-------------------------------------------------------------------------------------------------
 	BackupSignalGenerator::BackupSignalGenerator()
@@ -60,6 +88,12 @@ namespace Cing
 	//-------------------------------------------------------------------------------------------------
 	float BackupSignalGenerator::generateValue(float lastVal, float avgVal, float maxValue, float multiplier)
 	{
+		// security check for corrupt numbers
+		if ( !is_valid(lastVal) )
+		{
+			lastVal = avgVal;
+		}
+
 		// calculate a random value that tends toward the average
 		float diffToAvg = lastVal - avgVal;
 		float normPos;

@@ -37,7 +37,10 @@ namespace Cing
 		// Updates the values with new generated values, but only once every X seconds
 		void	update(float weights[NumValuesToGenerate]);
 
-		void	setAverageValue(int index, float value)	{ m_averageValue[index] = value; }
+		void	setAverageValue(int index, float value)	
+		{ 
+			m_averageValue[index] = (value > 0)? value: 0.1f; 
+		}
 		float	getAverageValue(int index)	{ return m_averageValue[index]; }
 		void	setMaxValue(int index, float value)		{ m_maxValue[index] = value; }
 
