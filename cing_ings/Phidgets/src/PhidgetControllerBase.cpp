@@ -137,9 +137,9 @@ namespace Cing
 		const char *err;
 
 		//Set the handlers to be run when the device is plugged in or opened from software, unplugged or closed from software, or generates an error.
-		CPhidget_set_OnAttach_Handler(getPhidgetHandle(), AttachHandler, NULL);
-		CPhidget_set_OnDetach_Handler(getPhidgetHandle(), DetachHandler, NULL);
-		CPhidget_set_OnError_Handler(getPhidgetHandle(), ErrorHandler, NULL);
+		CPhidget_set_OnAttach_Handler(getPhidgetHandle(), AttachHandler, this);
+		CPhidget_set_OnDetach_Handler(getPhidgetHandle(), DetachHandler, this);
+		CPhidget_set_OnError_Handler(getPhidgetHandle(), ErrorHandler, this);
 
 
 		//open the motor control for device connections
