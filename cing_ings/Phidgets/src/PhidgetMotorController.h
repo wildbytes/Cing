@@ -56,6 +56,18 @@ public:
 	CPhidgetHandle	getPhidgetHandle	()	{ return (CPhidgetHandle)m_motoControl; };
 	void			displayProperties	();
 
+	// overrides
+	void attachHandler	(CPhidgetHandle MC, void *userptr) 
+	{
+		// If the object is valid it means that there was an unintentional detatchment, so let's re-attatch
+		if ( m_isValid ) 
+		{
+			end();
+			init();
+		}
+	}
+
+
 private:
 
 	CPhidgetMotorControlHandle	m_motoControl; // Motor control handle
