@@ -56,6 +56,16 @@ class EmotivManager
 {
 public:
 
+	// Info about each user (by default this means, each USB dongle)
+	struct UserInfo
+	{
+		int				userID;
+		SignalQuality	signal;
+		double			lastEventTimestamp;
+
+		UserInfo(): userID(-1), signal(E_DISCONNECTED) {}
+	};
+
 	// Constructor / Destructor
 	EmotivManager();
 	~EmotivManager();
@@ -73,12 +83,18 @@ public:
 
 	EE_SignalStrength_t	getWirelessSignalStrength()			const { return m_wirelessSignalStatus; }
 	SignalQuality		getSignalQuality()					const;
+	SignalQuality		getSignalQualityForActiveUser()		const;
 
 	// Does it have alpha, beta, etc waves data?
 	bool				hasValidSpectralAnalysis()			const { return false; }
 
+	void				setActiveUserID(unsigned int userID);
+	int					getNumberOfUsers()					const { return m_userCount; }
+	UserInfo			getUserInfo( unsigned int index )	const { return (index >= m_userInfo.size())? UserInfo(): m_userInfo[index]; }
+
 private:
 	// private methods
+	void	updateConnectionState();
 	bool	connectToEmotivEngine();
 	void	updateAffectiveData();
 	void	caculateScale(double& rawScore, double& maxScale, double& minScale, double& scaledScore);
@@ -98,6 +114,8 @@ private:
 	EE_SignalStrength_t			m_wirelessSignalStatus;
 	bool						m_userConnected;	// we need an user to retrieve data...
 	bool						m_headSetOn;		// true if the headset switch (physical switch) is on.
+	int							m_nChannelsWithContact;
+	float						m_secsToConsiderNoDataReception, m_lastValidTimestamp;
 	bool						m_receivingData;	// true if we are receiving data from the headset.
 	float						m_timeStampLastReceivedData;
 
@@ -117,6 +135,12 @@ private:
 	// EEG Data capture
 	DataHandle					m_hData;
 	bool						m_readyToCollectEEGData;
+
+	// User management
+	int							m_activeUserID; // if set (not -1), only data from this user ID will be tracked.
+	int							m_userCount; // by default, this is the number of dongles.
+	std::vector<UserInfo>		m_userInfo;// info per user
+
 
 	// Other
 	const int					m_emoComposerPort;

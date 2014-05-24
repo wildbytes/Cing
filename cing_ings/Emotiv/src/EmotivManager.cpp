@@ -66,7 +66,11 @@ namespace Cing
 			m_affectivExcitementEnabled(false),
 			m_affectivFrustrationEnabled(false),
 			m_affectivMeditationEnabled(false),
-			m_readyToCollectEEGData(false)
+			m_readyToCollectEEGData(false),
+			m_nChannelsWithContact(0),
+			m_secsToConsiderNoDataReception(1.0f),
+			m_userCount(0),
+			m_activeUserID(-1)
 	{
 	}
 
@@ -115,6 +119,8 @@ namespace Cing
 		//m_hData = EE_DataCreate();
 		//EE_DataSetBufferSizeInSec(secs);
 
+		m_lastValidTimestamp = 0.0f;
+		m_userCount = 0;
 
 
 		return m_isValid;
@@ -156,23 +162,6 @@ namespace Cing
 			return;
 		}
 
-		// update general headset status
-		m_headSetOn = ES_GetHeadsetOn(m_eState) == 1;
-		m_wirelessSignalStatus = ES_GetWirelessSignalStatus(m_eState);
-		float timestamp = ES_GetTimeFromStart(m_eState);
-		m_receivingData = (timestamp > 0.001f) && !equal(timestamp, m_timeStampLastReceivedData); // we have new data if the timestamp of the last data is not zero and it is different from our last update.
-		m_timeStampLastReceivedData = timestamp;
-
-		// TEST
-		m_receivingData = true;
-
-
-		// update affectiv suite detection status
-		m_affectivEngagementEnabled		= ES_AffectivIsActive(m_eState, AFF_ENGAGEMENT_BOREDOM) == 1;
-		m_affectivExcitementEnabled		= ES_AffectivIsActive(m_eState, AFF_EXCITEMENT) == 1;
-		m_affectivFrustrationEnabled	= ES_AffectivIsActive(m_eState, AFF_FRUSTRATION) == 1;
-		m_affectivMeditationEnabled		= ES_AffectivIsActive(m_eState, AFF_MEDITATION) == 1;
-
 		// Get next event
 		int state = EE_EngineGetNextEvent(m_eEvent);
 
@@ -184,34 +173,86 @@ namespace Cing
 			EE_EmoEngineEventGetUserId(m_eEvent, &userID);
 
 			// Log the EmoState if it has been updated
+			UserInfo newUser;
 			switch( eventType )
 			{
 				// New user connected: ready to start reading data
 				case EE_UserAdded:
 					m_userConnected = true;
+					m_userCount++;
 
-					EE_DataAcquisitionEnable(userID, true); // this allows to capture EEG data for this user (i.e. different types of brain waves)
+					//EE_DataAcquisitionEnable(userID, true); // this allows to capture EEG data for this user (i.e. different types of brain waves)
 					m_readyToCollectEEGData = true;
+
+					EE_ResetDetection(userID, EE_AFFECTIV, 0);
 					
-					LOG( "EmotivManager: New User Added" );
+					// Store user info
+					newUser.userID = userID;
+					newUser.signal = getSignalQuality();
+					m_userInfo.push_back(newUser);
+
+					LOG( "EmotivManager: New User ADDED: ID = %d", userID );
 					break;
 
 				case EE_UserRemoved:
-					LOG( "EmotivManager: User Removed" );
+					LOG( "EmotivManager: New User REMOVED: ID = %d", userID );
 					m_userConnected = false;
+					m_userCount--;
+
+					// Remove user info from the list.
+					for ( std::vector<UserInfo>::iterator it = m_userInfo.begin(); it != m_userInfo.end(); ++it )
+					{
+						if ( it->userID == userID )
+						{
+							m_userInfo.erase(it);
+							break;
+						}
+					}
+
 					break;
 
 				// New data from headset
 				case EE_EmoStateUpdated:
+
 					EE_EmoEngineEventGetEmoState(m_eEvent, m_eState);
 
-					//LOG("%10.3fs : New Affectiv score from user %d ...\r", m_timeStampLastReceivedData, userID);
+					updateConnectionState();
+
+					// Only track data if this is the active user  (or if not active user has been set)
+					if ( (m_activeUserID == -1) || (m_activeUserID == userID) )
+					{ 
+						//LOG("%10.3fs : New Affectiv score from user %d ...\r", m_timeStampLastReceivedData, userID);
 					
-					// read affective data
-					updateAffectiveData();
+						// read affective data
+						updateAffectiveData();
+					}
 					break;
 			}
+
+			// If this user exists, updates it's info
+			for ( std::vector<UserInfo>::iterator it = m_userInfo.begin(); it != m_userInfo.end(); ++it )
+			{
+				if ( it->userID == userID )
+				{
+					it->signal = getSignalQuality();
+					it->lastEventTimestamp = secFromStart;
+				}	
+			}
+
 		}
+
+
+		// Update all users in case we're not receiving data from one anymore
+		for ( std::vector<UserInfo>::iterator it = m_userInfo.begin(); it != m_userInfo.end(); ++it )
+		{
+			// Other users, check if the last data is too old
+			if ( (secFromStart - it->lastEventTimestamp) > m_secsToConsiderNoDataReception )
+			{
+				// then set signal to no data as we are not receiving data for this user.
+				it->signal = E_DISCONNECTED;
+			}
+		}
+
 
 		// Capture and process EEG data
 		//captureEEGData();
@@ -221,7 +262,7 @@ namespace Cing
 	SignalQuality EmotivManager::getSignalQuality() const
 	{
 		// all good: have user, headset is on, wireless signal is good and we have a user connected
-		if ( m_headSetOn && m_receivingData && m_userConnected && (m_wirelessSignalStatus == GOOD_SIGNAL) && (m_affectivEngagementEnabled || m_affectivExcitementEnabled) )
+		if ( m_headSetOn && m_receivingData && m_userConnected && (m_wirelessSignalStatus == GOOD_SIGNAL) && (m_affectivEngagementEnabled ) )
 			return E_HIGH_QUALITY;
 		
 		//if we have user and data, but affective or engagement data are disabled due to noisy signals
@@ -236,6 +277,86 @@ namespace Cing
 		return E_DISCONNECTED;
 	}
 
+	// Returns the signal quality of the connection with the headset (for the active user)
+	SignalQuality EmotivManager::getSignalQualityForActiveUser() const
+	{
+		// Find info for the active user
+		for ( std::vector<UserInfo>::const_iterator it = m_userInfo.begin(); it != m_userInfo.end(); ++it )
+		{
+			// If the user exists
+			if ( it->userID == m_activeUserID )
+			{
+				return it->signal;
+			}
+		}
+
+		// Not found or no selected active user --> return last stored info
+		return getSignalQuality();
+
+	}
+
+
+
+	// Selects the user ID that will be active: the readings stored will be only from this user.
+	void EmotivManager::setActiveUserID(unsigned int userID)
+	{
+		for ( std::vector<UserInfo>::iterator it = m_userInfo.begin(); it != m_userInfo.end(); ++it )
+		{
+			// If the user exists
+			if ( it->userID == userID )
+			{
+				m_activeUserID = userID;
+				return;
+			}
+		}
+
+		// Not found, just set it to -1 (no user will be tracked "solo")
+		m_activeUserID = -1;
+	}
+
+	// Updates connection related info (timestamp, switch on/off, etc)
+	void EmotivManager::updateConnectionState()
+	{
+		// update general headset status
+		m_headSetOn = ES_GetHeadsetOn(m_eState) == 1;
+		m_nChannelsWithContact = ES_GetNumContactQualityChannels(m_eState);
+		m_wirelessSignalStatus = ES_GetWirelessSignalStatus(m_eState);
+		float timestamp = ES_GetTimeFromStart(m_eState);
+		
+		// If different timestamp, reset the timer
+		if ( !equal(timestamp, m_timeStampLastReceivedData) )
+		{
+			m_lastValidTimestamp = 0.0f;
+		}
+		else
+		{
+			m_lastValidTimestamp += (float)elapsedSec;
+		}
+
+		if ( m_lastValidTimestamp > m_secsToConsiderNoDataReception )
+		{
+			m_receivingData = false;
+		}
+		else
+		{
+			m_receivingData = true;
+		}
+
+		
+		//LOG_CRITICAL( "Emotif info: OnOff(%s), TimeFromStart(%f), Wireless(%d) ", toString(m_headSetOn).c_str(), timestamp, m_wirelessSignalStatus);
+		//m_receivingData = (timestamp > 0.001f) && !equal(timestamp, m_timeStampLastReceivedData); // we have new data if the timestamp of the last data is not zero and it is different from our last update.
+		m_timeStampLastReceivedData = timestamp;
+
+		EE_EEG_ContactQuality_t q[17];
+		for ( int i = 0; i < 17; ++i )
+			q[i] = ES_GetContactQuality( m_eState, i );
+
+		// update affectiv suite detection status
+		m_affectivEngagementEnabled		= ES_AffectivIsActive(m_eState, AFF_ENGAGEMENT_BOREDOM) == 1;
+		m_affectivExcitementEnabled		= ES_AffectivIsActive(m_eState, AFF_EXCITEMENT) == 1;
+		m_affectivFrustrationEnabled	= ES_AffectivIsActive(m_eState, AFF_FRUSTRATION) == 1;
+		m_affectivMeditationEnabled		= ES_AffectivIsActive(m_eState, AFF_MEDITATION) == 1;
+	}
 
 	// Connects to the Emotive Engine (real headset or EmoComposer)
 	bool EmotivManager::connectToEmotivEngine()
