@@ -310,8 +310,8 @@ namespace Cing
 
 	/**
 	* @brief Sets the pan level for the sound.
-	* @param [in] value New pan value for this sound, from 0 to 1.
-	* 0 is to the left, 1 is to the right.
+	* @param [in] value New pan value for this sound, from -1 to 1.
+	* -1 is to the left, 1 is to the right.
 	*
 	*/
 	void SoundFMOD::setPan( float value )

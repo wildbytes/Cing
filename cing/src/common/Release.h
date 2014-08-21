@@ -33,8 +33,8 @@
  * File: Contains helpers for object releasing
  */
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 namespace Cing

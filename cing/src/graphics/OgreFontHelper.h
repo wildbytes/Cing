@@ -24,8 +24,8 @@ THE SOFTWARE.
 #ifndef LUGRE_OGREFONTHELPER_H
 #define LUGRE_OGREFONTHELPER_H
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 /// ogre font utils, work in progress

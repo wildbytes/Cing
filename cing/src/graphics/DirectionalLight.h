@@ -22,8 +22,8 @@
 #ifndef _DirectionalLight_H_
 #define _DirectionalLight_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

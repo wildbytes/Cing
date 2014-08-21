@@ -28,8 +28,8 @@
 #ifndef _TexturedQuad_H_
 #define _TexturedQuad_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

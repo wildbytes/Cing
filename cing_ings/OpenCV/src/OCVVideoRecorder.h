@@ -1,8 +1,8 @@
 #ifndef _OCVVideoRecorder_H_
 #define _OCVVideoRecorder_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "video/BaseVideoRecorder.h"
 

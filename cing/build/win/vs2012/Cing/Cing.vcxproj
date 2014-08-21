@@ -111,6 +111,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\BackupSignalGenerator.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Emotiv\src\RingBuffer.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\Fmod\src\SoundManagerFMOD.cpp" />
@@ -129,6 +132,11 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.cpp" />
+    <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.cpp" />
     <ClCompile Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.cpp" />
     <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">
       <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/Zm118  %(AdditionalOptions)</AdditionalOptions>
@@ -218,12 +226,17 @@
     <ClCompile Include="..\..\..\..\src\gui\GUIManagerCEGUI.cpp" />
     <ClCompile Include="..\..\..\..\src\gui\GUIUserAPI.cpp" />
     <ClCompile Include="..\..\..\..\src\gui\OutputDebugTextBoxCEGUI.cpp" />
-    <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp" />
+    <ClCompile Include="..\..\..\..\src\midi\MidiIO.cpp">
+      <ShowIncludes Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ShowIncludes>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\src\video\BaseVideoRecorder.cpp" />
     <ClCompile Include="..\..\..\..\src\video\MediaPlayerVLC.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\..\cing_ings\cURLNetworkClient\src\cURLNetworkClient.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\BackupSignalGenerator.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\EmotivManager.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Emotiv\src\RingBuffer.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioInputFMOD.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\AudioPrereqs.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\Fmod\src\SoundFMOD.h" />
@@ -244,6 +257,12 @@
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCV-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\OpenCVUtils.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\OpenCV\src\Renderer2DOpenCV.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetAnalogOutController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetControllerBase.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetLEDController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetMotorController.h" />
+    <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\Phidgets-CingBeat.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGenerator-Plugin.h" />
     <ClInclude Include="..\..\..\..\..\cing_ings\RTShaderGenerator\src\ShaderGeneratorTechniqueResolverListener.h" />
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h" />

@@ -28,8 +28,8 @@
 #ifndef _Mouse_H_
 #define _Mouse_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "MouseBase.h"
 #include "InputPrereqs.h"

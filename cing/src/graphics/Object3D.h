@@ -28,8 +28,8 @@
 #ifndef _Cing_Object3D_H_
 #define _Cing_Object3D_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

@@ -28,8 +28,8 @@
 #ifndef _ImageResourceManager_H_
 #define _ImageResourceManager_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 // Common
 #include "common/Singleton.h"

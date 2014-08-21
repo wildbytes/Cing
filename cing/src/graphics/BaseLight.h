@@ -28,8 +28,8 @@
 #ifndef _BaseLight_H_
 #define _BaseLight_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "SceneGraphElement.h"

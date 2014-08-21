@@ -28,8 +28,8 @@
 #ifndef _GraphicsUserAPI_h_
 #define _GraphicsUserAPI_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 #include "MovableText.h"

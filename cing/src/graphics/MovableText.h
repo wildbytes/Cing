@@ -11,8 +11,8 @@
 #ifndef _MovableText_H__
 #define _MovableText_H__
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "GraphicsPrereqs.h"

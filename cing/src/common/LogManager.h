@@ -28,8 +28,8 @@
 #ifndef _CingLogManager_h_
 #define _CingLogManager_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "CommonPrereqs.h"
 #include "Singleton.h"

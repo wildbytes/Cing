@@ -22,8 +22,8 @@
 #ifndef _OCVCamera_H_
 #define _OCVCamera_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "cameraInput/BaseCameraInput.h"
 

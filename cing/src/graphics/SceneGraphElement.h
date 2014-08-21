@@ -22,8 +22,8 @@
 #ifndef _SceneGraphElement_H_
 #define _SceneGraphElement_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 

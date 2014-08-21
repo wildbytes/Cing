@@ -28,8 +28,8 @@
 #ifndef _FrameworkUserAPI_h_
 #define _FrameworkUserAPI_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "FrameworkPrereqs.h"

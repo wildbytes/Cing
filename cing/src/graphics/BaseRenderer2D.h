@@ -27,8 +27,8 @@
 
 #pragma once
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "GraphicsPrereqs.h"
 #include "common/LogManager.h"

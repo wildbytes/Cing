@@ -28,8 +28,8 @@
 //#ifndef _GUIManagerCEGUI_H_
 //#define _GUIManagerCEGUI_H_
 //
-//// Precompiled headers
-//#include "Cing-Precompiled.h"
+//
+//
 //
 //#include "GUIPrereqs.h"
 //#include "OutputDebugTextBoxCEGUI.h"

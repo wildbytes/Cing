@@ -28,8 +28,8 @@
 #ifndef _CommonConstants_h_
 #define _CommonConstants_h_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 // OIS

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Cing-Precompiled.h"
 #include "Cing.h"
 
 #include <iostream>

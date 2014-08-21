@@ -42,7 +42,7 @@
 // Linker 
 #if defined(WIN32)
 #ifdef _DEBUG
-		// Ligs
+		// Libs
 		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_core246d.lib")
 		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_highgui246d.lib")
 		#pragma comment(lib,"OpenCV/lib/lib/vs2012/opencv_imgproc246d.lib")

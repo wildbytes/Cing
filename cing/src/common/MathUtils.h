@@ -28,8 +28,8 @@
 #ifndef _Cing_MathUtils_H_
 #define _Cing_MathUtils_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 
 #include "CommonPrereqs.h"
@@ -515,6 +515,10 @@ inline bool ellipseIntersectsLine(	float _radiusX, float _radiusY, float centerX
  */
 inline float map( float value, float low1, float hight1, float low2, float hight2 )
 {
+	// Check if input range is 0 (both high and low are the same)
+	if ( equal(hight1, low1) )
+		return hight1;
+
     // Clamp value with limits of input range
     value = (value < low1) ?  low1 : value;
     value = (value > hight1) ?  hight1 : value;

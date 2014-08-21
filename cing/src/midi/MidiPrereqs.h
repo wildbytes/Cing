@@ -28,8 +28,8 @@
 #ifndef _MidiPrereqs_H_
 #define _MidiPrereqs_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 #include "RtMidi/include/RtMidi.h"
 

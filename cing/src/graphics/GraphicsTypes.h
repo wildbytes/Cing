@@ -22,8 +22,8 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #ifndef _Cing_GraphicsTypes_H_
 #define _Cing_GraphicsTypes_H_
 
-// Precompiled headers
-#include "Cing-Precompiled.h"
+
+
 
 /**
 * @internal
