@@ -75,6 +75,7 @@ namespace Cing
 		unsigned int		frameCount			() const { return m_nFrames; } 
 		const std::string&	getFilePath			() const { return m_fileName; }
 		bool				hasNewFrame			() const { return true; }
+		GraphicsType		getPixelFormat		() const { return m_pixelFormat; }
 
 		// Media control
 		void    play    ();
