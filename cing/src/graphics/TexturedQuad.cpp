@@ -248,7 +248,7 @@ namespace Cing
 		enableCastShadows(false);
         
 		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
-		//enableLighting(false);
+		enableLighting(false);
         
 		return true;
 	}
