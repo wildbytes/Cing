@@ -90,12 +90,12 @@ typedef void* GLeglImageOES;
 typedef char GLchar;
 
 #  include <QtGui/qopengles2ext.h>
-#  ifndef GL_DOUBLE
-#   define GL_DOUBLE GL_FLOAT
-#  endif
-#  ifndef GLdouble
-typedef GLfloat GLdouble;
-#  endif
+//#  ifndef GL_DOUBLE
+//#   define GL_DOUBLE GL_FLOAT
+//#  endif
+//#  ifndef GLdouble
+//typedef GLfloat GLdouble;
+//#  endif
 # endif // Q_OS_MAC
 #else
 # if defined(Q_OS_MAC)
