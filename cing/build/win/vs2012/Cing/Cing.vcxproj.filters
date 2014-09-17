@@ -175,6 +175,9 @@
     <Filter Include="cing_ings\Emotiv">
       <UniqueIdentifier>{35742443-76df-4fbd-b59e-c102a58a45dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials\Shaders">
+      <UniqueIdentifier>{70dc4863-2e2b-475b-846b-37373bbfe70b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material">
@@ -194,6 +197,30 @@
     </None>
     <None Include="..\..\..\..\src\input\BaseInputDevice.inl">
       <Filter>Src\Input\Header Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.compositor">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Glass.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\ColorCorrection.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\InvertFP.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Invert.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\BlackAndWhite.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\GrayScale.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\ColorCorrectionFP.cg">
+      <Filter>Materials\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
