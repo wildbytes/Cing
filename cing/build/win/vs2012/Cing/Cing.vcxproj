@@ -105,6 +105,7 @@
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\ColorCorrectionFP.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\GrayScale.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\InvertFP.cg" />
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\LUT.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\BlackAndWhite.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\ColorCorrection.material" />
@@ -113,6 +114,7 @@
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Glass.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Invert.material" />
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\LUT.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\OffsetMapping.material" />
     <None Include="..\..\..\..\..\cing_bin\data\RTShaderLib\materials\RTShaderSystem.material" />
     <None Include="..\..\..\..\src\input\BaseInputDevice.inl" />
