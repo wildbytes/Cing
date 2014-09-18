@@ -1,12 +1,23 @@
-sampler RT : register(s0);
+sampler MainTexture : register(s0);
 sampler lutTex : register(s1);
+
+float lutSize = 32.0;
+float offset = 1.0 / 64.0;
+float scale = 31.0 / 32.0;
 
 
 float4 LUT_ps(float2 iTexCoord : TEXCOORD0) : COLOR
 {
-    //float3 greyscale = dot(tex2D(RT, iTexCoord).rgb, float3(0.3, 0.59, 0.11));
-	//return float4(greyscale, 1.0);
-	float4 col = tex2D(RT, iTexCoord);
+	float4 rawCol = tex2D(MainTexture, iTexCoord);
+
+	float4 col = rawCol;
+	col.rgb = tex3D(lutTex, scale * rawCol.rgb + offset);
+
 	return col;
 }
 
+float4 Invert_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 col = tex2D(MainTexture, iTexCoord);
+	return 1 - col;
+}

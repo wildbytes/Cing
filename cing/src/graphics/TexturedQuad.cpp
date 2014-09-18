@@ -1326,6 +1326,8 @@ namespace Cing
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
 		if ( !material.isNull() )
 		{
+			m_ogreMaterial = material;
+			m_ogreMaterialName = materialName;
 			m_quad->setMaterialName( 0, materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
 		}
 		// TODO: Log -> material does not exist
@@ -1353,10 +1355,16 @@ namespace Cing
 			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName );
 			if ( texture.isNull() == false )
+			{
 				//mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
                 mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName( fileName );
+
+				m_ogreTextureName = fileName;
+			}
 			else
+			{
 				LOG_ERROR( "TexturedQuad::setTexture. ERROR: Texture [%s] not found", fileName.c_str() );
+			}
 		}
 	}
 
