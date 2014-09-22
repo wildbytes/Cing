@@ -1,9 +1,15 @@
-sampler RT : register(s0);
+sampler MainTexture : register(s0);
+sampler lutTex : register(s1);
 
+// Color correction params
 float Hue : register(c0);
 float Brightness : register(c1);
 float Contrast : register(c2);
 float Saturation : register(c3);
+
+// LUT parameters
+float offset : register(c4) = 1.0 / 64.0;
+float scale : register(c5) = 31.0 / 32.0;
 
 
 // Converts an RGB value to an HSV value that can be easily modified
@@ -65,13 +71,52 @@ float3 hsv_to_rgb(float3 HSV)
 
 float4 GrayScale_ps(float2 iTexCoord : TEXCOORD0) : COLOR
 {
-    float3 greyscale = dot(tex2D(RT, iTexCoord).rgb, float3(0.3, 0.59, 0.11));
+    float3 greyscale = dot(tex2D(MainTexture, iTexCoord).rgb, float3(0.3, 0.59, 0.11));
 	return float4(greyscale, 1.0);
 }
 
 float4 ColorCorrection_ps (float2 iTexCoord : TEXCOORD0) : COLOR
 {
-	float4 rgb = tex2D(RT, iTexCoord);
+	float4 rgb = tex2D(MainTexture, iTexCoord);
+	float3 hsv = rgb_to_hsv(rgb.xyz);
+
+	// Hue
+	hsv.x += Hue;
+	// make sure the Hue is in the range [0..6], otherwise the result may be meaningless
+	hsv.x = fmod(hsv.x, 6.0);
+
+	// Saturation
+	hsv.y = saturate(hsv.y + Saturation);
+
+	// convert back to RGB
+	rgb.xyz = hsv_to_rgb(hsv);
+
+	// apply brightness
+	if (Brightness < 0.0)
+		rgb.xyz = lerp(rgb.xyz, float3(0, 0, 0), -Brightness);
+	else
+		rgb.xyz = lerp(rgb.xyz, float3(1, 1, 1), Brightness);
+
+	// apply the contrast
+	float contrastK = (1.0 + Contrast) / 1.0;
+	contrastK *= contrastK;
+	rgb.r = ((rgb.r - 0.5) * contrastK) + 0.5;
+	rgb.g = ((rgb.g - 0.5) * contrastK) + 0.5;
+	rgb.b = ((rgb.b - 0.5) * contrastK) + 0.5;
+
+	return rgb;
+}
+
+float4 LUTAndCC_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 rawCol = tex2D(MainTexture, iTexCoord);
+
+	// First apply the LUT file
+	float4 rgb = rawCol;
+	float3 coord = scale * rawCol.rgb + offset;
+	rgb.rgb = tex3D(lutTex, coord);
+
+	// now do the color correction, for that, first convert to HSV
 	float3 hsv = rgb_to_hsv(rgb.xyz);
 
 	// Hue

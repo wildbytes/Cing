@@ -1,7 +1,8 @@
 fragment_program Ogre/Compositor/ColorCorrectionFP cg
 {
 	source ColorCorrectionFP.cg
-	entry_point ColorCorrection_ps
+	//entry_point ColorCorrection_ps
+	entry_point LUTAndCC_ps
 	profiles ps_2_0 arbfp1
 }
 
@@ -24,11 +25,18 @@ material Ogre/Compositor/ColorCorrection
 			{
 			}
 
-			texture_unit RT
+			texture_unit MainTexture
 			{
                 tex_coord_set 0
 				tex_address_mode clamp
 				filtering trilinear
+			}
+
+			texture_unit lutTex
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear none
 			}
 
 		}

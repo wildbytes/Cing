@@ -1,7 +1,7 @@
 fragment_program Ogre/Compositor/LUT cg
 {
 	source LUT.cg
-	entry_point Invert_ps
+	entry_point LUT_ps
 	profiles ps_2_0 arbfp1
 }
 
@@ -10,6 +10,7 @@ material Ogre/Compositor/LUT
 	technique
 	{
 
+		// LUT pass
 		pass
 		{
 			cull_hardware none
@@ -32,12 +33,12 @@ material Ogre/Compositor/LUT
 				//texture ogrelogo.png
 			}
 
-//			texture_unit lutTex
-//			{
-//				tex_coord_set 1
-//				tex_address_mode clamp
-//				filtering trilinear
-//			}
+			texture_unit lutTex
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear none
+			}
 
 		}
 	}
