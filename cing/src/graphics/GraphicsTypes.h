@@ -57,6 +57,8 @@ namespace Cing
 		BGR			= Ogre::PF_B8G8R8,		///< Blue, Green and Red
 		BGRA		= Ogre::PF_B8G8R8A8,	///< Blue, Green, Red and Alpha
 		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
+		DXT1		= Ogre::PF_DXT1,
+		DXT5		= Ogre::PF_DXT5,
 #else
 		// Using Ogre Byte formats
 		RGB			= Ogre::PF_BYTE_RGB,	///< Red, Green and Blue
@@ -65,6 +67,8 @@ namespace Cing
 		BGR			= Ogre::PF_BYTE_BGR,	///< Blue, Green and Red
 		BGRA		= Ogre::PF_BYTE_BGRA,	///< Blue, Green, Red and Alpha
 		GRAYSCALE	= Ogre::PF_BYTE_L,		///< Gray scale
+		DXT1		= Ogre::PF_DXT1,
+		DXT5		= Ogre::PF_DXT5,
 #endif
 
 		// Color Modes
