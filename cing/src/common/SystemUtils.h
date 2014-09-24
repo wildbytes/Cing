@@ -49,6 +49,7 @@ namespace Cing
 	bool		isFolder( const std::string& path );
 
 	std::vector<std::string> listDirectoriesAtPath( const std::string& path );
+	std::vector<std::string> listFilesAtPath( const std::string& path );
 
 	// Paths
 	void		splitFilename		( const std::string& path, std::string& outBasePath, std::string& outFileName );

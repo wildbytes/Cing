@@ -176,6 +176,49 @@ namespace Cing
 		return dirs;
 	}
 
+	/**
+	 * @brief List the files in a given path. It won't list directories
+	 *
+	 * @param folderPath Absolute path to the folder to be created
+	 * @return The list of directories inside the given path, not including "." and "..". It'll be empty if the path doesn't
+	 *   exist or if it's not a directory
+	 */
+	std::vector<std::string> listFilesAtPath( const std::string& _path )
+	{
+		std::string path = _path;
+		std::vector<std::string> dirs;
+
+		// check it finishes with a '/'
+		if (path[path.size() - 1] != '/' && 
+			path[path.size() - 1] != '\\')
+		{
+			path.append("/");
+		}
+
+		// first check it exists and it's a dir
+		boost::filesystem::path dirPath(path);
+		if (!boost::filesystem::exists(dirPath) ||
+			!boost::filesystem::is_directory(dirPath))
+			return dirs;
+
+		// now iterate over all the directories in the given dir
+		boost::filesystem::directory_iterator end_iter;
+		for (boost::filesystem::directory_iterator it(dirPath); it != end_iter; ++it)
+		{
+			if (!boost::filesystem::is_directory((*it).status()))
+			{
+				boost::filesystem::path p = (*it).path();
+				boost::filesystem::path filenamePath = p.filename();
+				const wchar_t* filenameW = filenamePath.c_str();
+				char filename[128];
+				wcstombs(filename, filenameW, 128);
+				dirs.push_back(filename);
+			}
+		}
+
+		return dirs;
+	}
+
 
 	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
      * @param[in]	path Path to split
