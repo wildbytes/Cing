@@ -1508,6 +1508,14 @@ namespace Cing
                 return GRAYSCALE;
                 break;
                 
+			case Ogre::PF_FLOAT32_RGB:
+				return FLOAT32_RGB;
+				break;
+
+			case Ogre::PF_FLOAT16_RGB:
+				return FLOAT16_RGB;
+				break;
+
             default: 
                 LOG_ERROR( "[ERROR] toCingPixelFormat: Ogre format not supported: %d", ogreFormat );
                 return RGB;
@@ -1538,6 +1546,22 @@ namespace Cing
             case GRAYSCALE:
                 return Ogre::PF_BYTE_L;
                 break;
+
+			case DXT1:
+				return Ogre::PF_DXT1;
+				break;
+
+			case DXT5:
+				return Ogre::PF_DXT5;
+				break;
+
+			case FLOAT32_RGB:
+				return Ogre::PF_FLOAT32_RGB;
+				break;
+
+			case FLOAT16_RGB:
+				return Ogre::PF_FLOAT16_RGB;
+				break;
                 
             default: 
                 LOG_ERROR( "[ERROR] toOgrePixelFormat: Cing Pixel format not supported: %d", cingformat );
