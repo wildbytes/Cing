@@ -57,7 +57,7 @@ namespace CCS
             , CameraControlSystem::CollidableCamera(cam, margin)
 			, mFixedAxis(Ogre::Vector3::UNIT_Y)
             , mMoveFactor(1)
-            , mRotationFactor(0.13)
+            , mRotationFactor(0.13f)
 			, mRotX(initialRotationX)
 			, mRotY(initialRotationY)
 			, mInitialPosition(initialPosition)

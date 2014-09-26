@@ -48,7 +48,7 @@ namespace CCS
 			, bool resetToInitialPosition = true, Ogre::Real collisionmargin = 0.1f) 
 			: ChaseFreeYawAxisCameraMode(cam, Ogre::Vector3::ZERO, Ogre::Quaternion::IDENTITY, collisionmargin)
 			, mZoomFactor(1)
-            , mRotationFactor(0.13)
+            , mRotationFactor(0.13f)
 			, mInitialRotHorizontal(initialHorizontalRotation)
 			, mInitialRotVertical(initialVerticalRotation)
 			, mInitialZoom(initialZoom)			
