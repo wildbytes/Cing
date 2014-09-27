@@ -231,6 +231,12 @@
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\LUT.material">
       <Filter>Materials\Scripts</Filter>
     </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\STMap.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\STMap.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\Cing-Precompiled.cpp">

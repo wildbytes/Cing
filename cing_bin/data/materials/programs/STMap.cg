@@ -1,0 +1,19 @@
+sampler MainTexture : register(s0);
+sampler STMap : register(s1);
+
+float4 STMap_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	// apply the stUV
+	float4 stUV = tex2D(STMap, iTexCoord);
+	stUV.y = 1.0 - stUV.y;		//< the Y coordinate is inverted
+
+	// now use the uv from the STMap for the texture
+	float4 rawCol = tex2D(MainTexture, stUV.xy);
+
+	return rawCol;
+}
+
+float4 Normal_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	return tex2D(MainTexture, iTexCoord);
+}
