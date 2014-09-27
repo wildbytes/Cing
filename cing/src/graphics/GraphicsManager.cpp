@@ -76,7 +76,7 @@ namespace Cing
 	GraphicsManager::GraphicsManager():
     m_bIsValid		( false ),
     m_showFps		( false ),
-    m_fpsAverage	( 50 ),
+    m_fpsAverage	( 5 ),
     m_pSceneManager( NULL ),
     m_fill( true ),
     m_stroke( true ),
