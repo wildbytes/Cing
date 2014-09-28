@@ -43,7 +43,7 @@ namespace Cing
 
 
 	//-------------------------------------------------------------------------------------------------
-    void SoundOpenAL::load(const char* filename)
+    void SoundOpenAL::load(const std::string& fileName)
 	{
 		if (!SoundManagerOpenAL::getSingleton().isValid())
 		{
@@ -51,7 +51,7 @@ namespace Cing
 		}
 
 		// Get the complete path for loading the file
-		std::string completePath = ResourceManager::userDataPath + filename;
+		std::string completePath = ResourceManager::userDataPath + fileName;
 
 		// load the sound using FreeALUT
 		bufferId = alutCreateBufferFromFile(completePath.c_str());

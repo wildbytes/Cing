@@ -65,6 +65,9 @@ public:
 	void registerSound  ( SoundFMOD* soundPtr );
 	void unregisterSound( SoundFMOD* soundPtr );
 
+	// Other controls (MUST BE CALLED BEFORE LOADING ANY SOUND)
+	void setSpeakerMode( FMOD_SPEAKERMODE mode ) { m_speakerMode = mode;  }
+
 private:
 	/// Type for sounds' container
 	typedef std::set< SoundFMOD* > SoundsContainer;
@@ -74,8 +77,9 @@ private:
 	~SoundManagerFMOD();
 
 	// Attributes
-	FMOD_SYSTEM*        m_system;       ///< Variable FMOD_System
+	FMOD_SYSTEM*			m_system;       ///< Variable FMOD_System
 	SoundsContainer			m_systemSounds; ///< Container for current loaded sounds
+	FMOD_SPEAKERMODE		m_speakerMode;	///< Allows speaker mode control (Stereo, 5.1, etc)
 };
 
 } // namespace Cing

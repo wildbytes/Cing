@@ -91,7 +91,7 @@ const char* getFmodMessageFromCode( FMOD_RESULT result )
  *
  **/
 SoundManagerFMOD::SoundManagerFMOD() :
-    m_system( 0 )
+    m_system( 0 ), m_speakerMode(FMOD_SPEAKERMODE_STEREO)
 {
 
 }
@@ -146,6 +146,11 @@ FMOD_SYSTEM* SoundManagerFMOD::init()
 	{
 		LOG_ERROR( "Invalid FMOD library version. Check DLL file." );
 	}
+
+	
+	// Set speaker mode
+    result = FMOD_System_SetSpeakerMode(m_system, m_speakerMode);  
+
 
   // TODO Revise these parameters (set to default)
   result = FMOD_System_Init( m_system, 32, FMOD_INIT_NORMAL, 0 ); // Initialize FMOD.
