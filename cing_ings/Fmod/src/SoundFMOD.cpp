@@ -82,7 +82,7 @@ namespace Cing
 		// Init shared audio if needed
 		if( !m_sysPtr )
 			m_sysPtr = SoundManagerFMOD::getSingleton().init();
-
+    
 		// If was initialized previously -> release it first
 		if( m_sound )
 			end();
