@@ -219,6 +219,51 @@ namespace Cing
 		return dirs;
 	}
 
+	/** Copies the given file to the destination file
+     * @param[in]	path to the original file
+     * @param[in]	path to the destination file
+     * @return		true if the copy finished successfully, false otherwise
+	 */
+	bool copyFile( std::string const& origPath, std::string const& destPath )
+	{
+		// open the files (both for reading and writing)
+		std::ifstream input;
+		std::ofstream output;
+
+		input.open(origPath.c_str(), std::ifstream::binary);
+		output.open(destPath.c_str(), std::ifstream::binary);
+
+		// if there was an issue opening either return false already
+		if (!input || !output)
+			return false;
+
+		// check the length of the file to be able to create the buffer of the right length
+		input.seekg(0, input.end);
+		unsigned int length = input.tellg();
+		input.seekg(0, input.beg);
+		if (length > 0)
+		{
+			// create the buffer to read the file contents
+			char* buffer = new char[length];
+
+			// read the buffer 
+			input.read(buffer, length);
+
+			// write it to the destination
+			output.write(buffer, length);
+
+			// release the memory used
+			delete[] buffer;
+		}
+
+		// close the files
+		input.close();
+		output.close();
+
+		// everything went fine, return true
+		return true;
+	}
+
 
 	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
      * @param[in]	path Path to split

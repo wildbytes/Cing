@@ -51,6 +51,8 @@ namespace Cing
 	std::vector<std::string> listDirectoriesAtPath( const std::string& path );
 	std::vector<std::string> listFilesAtPath( const std::string& path );
 
+	bool		copyFile( std::string const& origPath, std::string const& destPath );
+
 	// Paths
 	void		splitFilename		( const std::string& path, std::string& outBasePath, std::string& outFileName );
 	bool		isPathAbsolute		( const std::string& path );
