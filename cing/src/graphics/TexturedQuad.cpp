@@ -83,7 +83,8 @@ namespace Cing
 		m_zScale				( 1.0f ),
 		m_bIsValid				( false ),
 		m_renderQueueForced		( false ),
-		m_sm					( NULL )
+		m_sm					( NULL ),
+		m_ogreOrigMaterialName	( "" )
 	{
 	}
 
@@ -317,7 +318,7 @@ namespace Cing
 			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
 			// Destroy material
-			Ogre::MaterialManager::getSingleton().remove( m_ogreMaterialName );
+			Ogre::MaterialManager::getSingleton().remove( m_ogreOrigMaterialName );
 
 			// Destroy texture
 			Ogre::TextureManager::getSingleton().remove( m_ogreTextureName );
@@ -1057,6 +1058,7 @@ namespace Cing
 		// Material
 		oss << MATERIAL_NAME << m_quadCounter;
 		m_ogreMaterialName = oss.str();
+		m_ogreOrigMaterialName = m_ogreMaterialName;
 	}
 
 	/**

@@ -174,6 +174,7 @@ namespace Cing
 		std::string               	m_ogreManualObjectName; 		///< Unique object name
 		std::string					m_ogreTextureName;      		///< Unique texture name
 		std::string               	m_ogreMaterialName;     		///< Unique material name
+		std::string					m_ogreOrigMaterialName;			///< The original material. The material may be switched later on in the life of the object, but in the destructor we want to remove this material
 
 		bool						m_visible;						///< Tells if the object is visible or not
 		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
