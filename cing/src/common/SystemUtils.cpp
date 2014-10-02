@@ -302,4 +302,12 @@ namespace Cing
 	}
 
 	
+	void copyFile(std::string const& orig, std::string const& dest)
+	{
+		boost::filesystem::path origPath(orig.c_str());
+		boost::filesystem::path destPath(dest.c_str());
+		boost::filesystem::copy(origPath, destPath);
+	}
+
+
 } // namespace Cing
