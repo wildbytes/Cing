@@ -102,7 +102,7 @@ namespace Cing
 
 	private:
 		// Internal methods
-		bool			buildPathToFile			( const String& path );
+		bool			buildPathToFile			( const std::string& path );
 		bool			createPipeline			();
 		void			setPipelineState		( GstState state );
 		bool			createVideoSink			();
@@ -110,7 +110,7 @@ namespace Cing
 		void			copyBufferIntoImage		();
 		void			flushBusMsg				();
 		const char*		cingToGstPixelFormat	( GraphicsType cingPixelFormat );
-		GraphicsType	gstToCingPixelFormat	( const String& gstVideoFormat );
+		GraphicsType	gstToCingPixelFormat	( const std::string& gstVideoFormat );
 		bool			checkVideoFormatMatch	( GstVideoFormat gstVideoFormat, GraphicsType cingVideoFormat );
 
 		// GStreamer stuff
@@ -119,8 +119,8 @@ namespace Cing
 		GstElement*				m_appBin;
 
 		// Media info
-		String					m_fileName;			///< Name of the loaded video
-		String					m_filePath;			///< Full path of the loaded video
+		std::string					m_fileName;			///< Name of the loaded video
+		std::string					m_filePath;			///< Full path of the loaded video
 		double         			m_videoDuration;	///< Duration in seconds
 		float                 	m_videoFps;			///< Frames per second of the loaded video
 		int						m_nFrames;			///< Total number of frames of the video
@@ -143,7 +143,7 @@ namespace Cing
 		unsigned char*					m_internalBuffer;	///< Internal buffer to store the buffer comming from gstreamer
 		int								m_bufferSizeInBytes;///< Size of the buffer in bytes (w*h*nChannels)
 		int								m_widthStep;		///< Size in bytes of each row of pixels in the video (It is usually width*channelCount, but it might be different
-		String							m_outputGstVideoFormat;///< GStreamer output buffer video format
+		std::string						m_outputGstVideoFormat;///< GStreamer output buffer video format
 		GraphicsType					m_pixelFormat;		///< Pixel format in which new image frames will be stored
 		Image							m_frameImg;			///< Image containing the buffer of the current video frame
 		Image							m_frameImgGray;		///< Image containing the buffer of the current video frame in gray scale in case gray format is requested (GStreamer 0.10.28 does not support gray yet)
