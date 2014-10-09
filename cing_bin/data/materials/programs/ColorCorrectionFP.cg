@@ -12,6 +12,14 @@ float Saturation : register(c3);
 float offset : register(c4) = 1.0 / 64.0;
 float scale : register(c5) = 31.0 / 32.0;
 
+// RGB gain and factor
+float RedGain = 0.0;
+float GreenGain = 0.0;
+float BlueGain = 0.0;
+float RedFactor = 1.0;
+float GreenFactor = 1.0;
+float BlueFactor = 1.0;
+
 
 // Converts an RGB value to an HSV value that can be easily modified
 float3 rgb_to_hsv(float3 RGB)
@@ -69,6 +77,14 @@ float3 hsv_to_rgb(float3 HSV)
     return RGB;
 }
 
+// Applies the RGB gain and factor parameters to the given colour. Alpha will remain unchanged
+float4 applyGainAndFactor(float4 col)
+{
+	float4 result = float4(RedGain + RedFactor * col.r, GreenGain + GreenFactor * col.g, BlueGain + BlueFactor * col.b, col.a);
+
+	return result;
+}
+
 
 float4 GrayScale_ps(float2 iTexCoord : TEXCOORD0) : COLOR
 {
@@ -79,6 +95,11 @@ float4 GrayScale_ps(float2 iTexCoord : TEXCOORD0) : COLOR
 float4 ColorCorrection_ps (float2 iTexCoord : TEXCOORD0) : COLOR
 {
 	float4 rgb = tex2D(MainTexture, iTexCoord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
+
+	// convert to HSV
 	float3 hsv = rgb_to_hsv(rgb.xyz);
 
 	// Hue
@@ -116,6 +137,9 @@ float4 LUTAndCC_ps (float2 iTexCoord : TEXCOORD0) : COLOR
 	float4 rgb = rawCol;
 	float3 coord = scale * rawCol.rgb + offset;
 	rgb.rgb = tex3D(lutTex, coord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
 
 	// now do the color correction, for that, first convert to HSV
 	float3 hsv = rgb_to_hsv(rgb.xyz);
@@ -160,6 +184,9 @@ float4 LUTAndCCAndST_ps (float2 iTexCoord : TEXCOORD0) : COLOR
 	float4 rgb = rawCol;
 	float3 coord = scale * rawCol.rgb + offset;
 	rgb.rgb = tex3D(lutTex, coord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
 
 	// now do the color correction, for that, first convert to HSV
 	float3 hsv = rgb_to_hsv(rgb.xyz);
