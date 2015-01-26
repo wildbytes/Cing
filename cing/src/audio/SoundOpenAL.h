@@ -31,7 +31,7 @@ namespace Cing
 				 * If already had a file loaded, it will be discarded, loading
 				 * the new file.
          **/
-        virtual void load(const char* filename);
+        virtual void load(const std::string& fileName);
 
         /**
          * @brief Plays the sound.

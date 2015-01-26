@@ -1,0 +1,130 @@
+fragment_program Ogre/Compositor/ColorCorrection cg
+{
+	source ColorCorrectionFP.cg
+	entry_point ColorCorrection_ps
+	profiles ps_2_0 arbfp1
+}
+
+fragment_program Ogre/Compositor/ColorCorrectionLUT cg
+{
+	source ColorCorrectionFP.cg
+	entry_point LUTAndCC_ps
+	profiles ps_2_0 arbfp1
+}
+
+fragment_program Ogre/Compositor/ColorCorrectionST cg
+{
+	source ColorCorrectionFP.cg
+	entry_point LUTAndCCAndST_ps
+	profiles ps_2_0 arbfp1
+}
+
+material Ogre/Compositor/ColorCorrection
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Compositor/ColorCorrection
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+		}
+	}
+}
+
+material Ogre/Compositor/ColorCorrectionLUT
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Compositor/ColorCorrectionLUT
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+			texture_unit lutTex
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear none
+			}
+
+		}
+	}
+}
+
+material Ogre/Compositor/ColorCorrectionST
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Compositor/ColorCorrectionST
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+			texture_unit lutTex
+			{
+				tex_coord_set 1
+				tex_address_mode clamp
+				filtering linear linear none
+			}
+
+			texture_unit STMap
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+		}
+	}
+}

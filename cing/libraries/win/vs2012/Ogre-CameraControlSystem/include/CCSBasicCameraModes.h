@@ -151,7 +151,7 @@ namespace CCS
             , mFixedStep(fixedStep)
 			, mDelta(delta)
         {
-            mTightness = 0.01;
+            mTightness = 0.01f;
 			mRemainingTime = 0;
         };
 

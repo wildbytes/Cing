@@ -49,6 +49,8 @@
 #include "OgreSceneManager.h"
 #include "OgreImageCodec.h"
 
+//#pragma optimize("", off)
+
 namespace Cing
 {
 	/**

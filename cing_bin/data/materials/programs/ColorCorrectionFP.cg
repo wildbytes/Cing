@@ -1,0 +1,219 @@
+sampler MainTexture : register(s0);
+sampler lutTex : register(s1);
+sampler STMap : register(s2);
+
+// Color correction params
+float Hue : register(c0);
+float Brightness : register(c1);
+float Contrast : register(c2);
+float Saturation : register(c3);
+
+// LUT parameters
+float offset : register(c4) = 1.0 / 64.0;
+float scale : register(c5) = 31.0 / 32.0;
+
+// RGB gain and factor
+float RedGain = 0.0;
+float GreenGain = 0.0;
+float BlueGain = 0.0;
+float RedFactor = 1.0;
+float GreenFactor = 1.0;
+float BlueFactor = 1.0;
+
+
+// Converts an RGB value to an HSV value that can be easily modified
+float3 rgb_to_hsv(float3 RGB)
+{
+    float r = RGB.x;
+    float g = RGB.y;
+    float b = RGB.z;
+
+    float minChannel = min(r, min(g, b));
+    float maxChannel = max(r, max(g, b));
+
+    float h = 0;
+    float s = 0;
+    float v = maxChannel;
+
+    float delta = maxChannel - minChannel;
+
+    if (delta != 0)
+    {
+        s = delta / v;
+
+        if (r == v) h = (g - b) / delta;
+        else if (g == v) h = 2 + (b - r) / delta;
+        else if (b == v) h = 4 + (r - g) / delta;
+    }
+
+    return float3(h, s, v);
+}
+
+// Converts back to RGB from HSV
+float3 hsv_to_rgb(float3 HSV)
+{
+    float3 RGB = HSV.z;
+
+    float h = HSV.x;
+    float s = HSV.y;
+    float v = HSV.z;
+
+    float i = floor(h);
+    float f = h - i;
+
+    float p = (1.0 - s);
+    float q = (1.0 - s * f);
+    float t = (1.0 - s * (1 - f));
+
+    if (i == 0) { RGB = float3(1, t, p); }
+    else if (i == 1) { RGB = float3(q, 1, p); }
+    else if (i == 2) { RGB = float3(p, 1, t); }
+    else if (i == 3) { RGB = float3(p, q, 1); }
+    else if (i == 4) { RGB = float3(t, p, 1); }
+    else /* i == -1 */ { RGB = float3(1, p, q); }
+
+    RGB *= v;
+
+    return RGB;
+}
+
+// Applies the RGB gain and factor parameters to the given colour. Alpha will remain unchanged
+float4 applyGainAndFactor(float4 col)
+{
+	float4 result = float4(RedGain + RedFactor * col.r, GreenGain + GreenFactor * col.g, BlueGain + BlueFactor * col.b, col.a);
+
+	return result;
+}
+
+
+float4 GrayScale_ps(float2 iTexCoord : TEXCOORD0) : COLOR
+{
+    float3 greyscale = dot(tex2D(MainTexture, iTexCoord).rgb, float3(0.3, 0.59, 0.11));
+	return float4(greyscale, 1.0);
+}
+
+float4 ColorCorrection_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 rgb = tex2D(MainTexture, iTexCoord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
+
+	// convert to HSV
+	float3 hsv = rgb_to_hsv(rgb.xyz);
+
+	// Hue
+	hsv.x += Hue;
+	// make sure the Hue is in the range [0..6], otherwise the result may be meaningless
+	hsv.x = fmod(hsv.x, 6.0);
+
+	// Saturation
+	hsv.y = saturate(hsv.y + Saturation);
+
+	// convert back to RGB
+	rgb.xyz = hsv_to_rgb(hsv);
+
+	// apply brightness
+	if (Brightness < 0.0)
+		rgb.xyz = lerp(rgb.xyz, float3(0, 0, 0), -Brightness);
+	else
+		rgb.xyz = lerp(rgb.xyz, float3(1, 1, 1), Brightness);
+
+	// apply the contrast
+	float contrastK = (1.0 + Contrast) / 1.0;
+	contrastK *= contrastK;
+	rgb.r = ((rgb.r - 0.5) * contrastK) + 0.5;
+	rgb.g = ((rgb.g - 0.5) * contrastK) + 0.5;
+	rgb.b = ((rgb.b - 0.5) * contrastK) + 0.5;
+
+	return rgb;
+}
+
+float4 LUTAndCC_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 rawCol = tex2D(MainTexture, iTexCoord);
+
+	// First apply the LUT file
+	float4 rgb = rawCol;
+	float3 coord = scale * rawCol.rgb + offset;
+	rgb.rgb = tex3D(lutTex, coord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
+
+	// now do the color correction, for that, first convert to HSV
+	float3 hsv = rgb_to_hsv(rgb.xyz);
+
+	// Hue
+	hsv.x += Hue;
+	// make sure the Hue is in the range [0..6], otherwise the result may be meaningless
+	hsv.x = fmod(hsv.x, 6.0);
+
+	// Saturation
+	hsv.y = saturate(hsv.y + Saturation);
+
+	// convert back to RGB
+	rgb.xyz = hsv_to_rgb(hsv);
+
+	// apply brightness
+	if (Brightness < 0.0)
+		rgb.xyz = lerp(rgb.xyz, float3(0, 0, 0), -Brightness);
+	else
+		rgb.xyz = lerp(rgb.xyz, float3(1, 1, 1), Brightness);
+
+	// apply the contrast
+	float contrastK = (1.0 + Contrast) / 1.0;
+	contrastK *= contrastK;
+	rgb.r = ((rgb.r - 0.5) * contrastK) + 0.5;
+	rgb.g = ((rgb.g - 0.5) * contrastK) + 0.5;
+	rgb.b = ((rgb.b - 0.5) * contrastK) + 0.5;
+
+	return rgb;
+}
+
+float4 LUTAndCCAndST_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	// apply the stUV
+	float4 stUV = tex2D(STMap, iTexCoord);
+	stUV.y = 1.0 - stUV.y;		//< the Y coordinate is inverted
+
+	// now use the uv from the STMap for the texture
+	float4 rawCol = tex2D(MainTexture, stUV.xy);
+
+	// First apply the LUT file
+	float4 rgb = rawCol;
+	float3 coord = scale * rawCol.rgb + offset;
+	rgb.rgb = tex3D(lutTex, coord);
+
+	// apply the gain and factor parameters
+	rgb = applyGainAndFactor(rgb);
+
+	// now do the color correction, for that, first convert to HSV
+	float3 hsv = rgb_to_hsv(rgb.xyz);
+
+	// Hue
+	hsv.x += Hue;
+	// make sure the Hue is in the range [0..6], otherwise the result may be meaningless
+	hsv.x = fmod(hsv.x, 6.0);
+
+	// Saturation
+	hsv.y = saturate(hsv.y + Saturation);
+
+	// convert back to RGB
+	rgb.xyz = hsv_to_rgb(hsv);
+
+	// apply brightness
+	if (Brightness < 0.0)
+		rgb.xyz = lerp(rgb.xyz, float3(0, 0, 0), -Brightness);
+	else
+		rgb.xyz = lerp(rgb.xyz, float3(1, 1, 1), Brightness);
+
+	// apply the contrast
+	float contrastK = (1.0 + Contrast) / 1.0;
+	contrastK *= contrastK;
+	rgb.r = ((rgb.r - 0.5) * contrastK) + 0.5;
+	rgb.g = ((rgb.g - 0.5) * contrastK) + 0.5;
+	rgb.b = ((rgb.b - 0.5) * contrastK) + 0.5;
+
+	return rgb;
+}

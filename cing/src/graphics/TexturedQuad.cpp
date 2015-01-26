@@ -83,7 +83,8 @@ namespace Cing
 		m_zScale				( 1.0f ),
 		m_bIsValid				( false ),
 		m_renderQueueForced		( false ),
-		m_sm					( NULL )
+		m_sm					( NULL ),
+		m_ogreOrigMaterialName	( "" )
 	{
 	}
 
@@ -248,7 +249,7 @@ namespace Cing
 		enableCastShadows(false);
         
 		// No lighting by default (as this is usually used to render 2d images and not images in 3d scenes with lighting).
-		//enableLighting(false);
+		enableLighting(false);
         
 		return true;
 	}
@@ -317,7 +318,7 @@ namespace Cing
 			m_sm->destroyManualObject( m_ogreManualObjectName );		
 
 			// Destroy material
-			Ogre::MaterialManager::getSingleton().remove( m_ogreMaterialName );
+			Ogre::MaterialManager::getSingleton().remove( m_ogreOrigMaterialName );
 
 			// Destroy texture
 			Ogre::TextureManager::getSingleton().remove( m_ogreTextureName );
@@ -1057,6 +1058,7 @@ namespace Cing
 		// Material
 		oss << MATERIAL_NAME << m_quadCounter;
 		m_ogreMaterialName = oss.str();
+		m_ogreOrigMaterialName = m_ogreMaterialName;
 	}
 
 	/**
@@ -1326,6 +1328,8 @@ namespace Cing
 		Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName( materialName );
 		if ( !material.isNull() )
 		{
+			m_ogreMaterial = material;
+			m_ogreMaterialName = materialName;
 			m_quad->setMaterialName( 0, materialName, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME );
 		}
 		// TODO: Log -> material does not exist
@@ -1353,10 +1357,16 @@ namespace Cing
 			Ogre::MaterialPtr mat = Ogre::MaterialManager::getSingleton().getByName( m_quad->getSection(0)->getMaterialName() );
 			Ogre::TexturePtr texture = Ogre::TextureManager::getSingleton().getByName( fileName );
 			if ( texture.isNull() == false )
+			{
 				//mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->_setTexturePtr( texture );
                 mat->getTechnique(0)->getPass(0)->getTextureUnitState(0)->setTextureName( fileName );
+
+				m_ogreTextureName = fileName;
+			}
 			else
+			{
 				LOG_ERROR( "TexturedQuad::setTexture. ERROR: Texture [%s] not found", fileName.c_str() );
+			}
 		}
 	}
 

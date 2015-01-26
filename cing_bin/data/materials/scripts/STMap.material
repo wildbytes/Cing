@@ -1,0 +1,78 @@
+fragment_program Ogre/Custom/STMap cg
+{
+	source STMap.cg
+	entry_point STMap_ps
+	profiles ps_2_0 arbfp1
+}
+
+fragment_program Ogre/Custom/NoSTMap cg
+{
+	source STMap.cg
+	entry_point Normal_ps
+	profiles ps_2_0 arbfp1
+}
+
+material Ogre/Custom/STMap
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Custom/STMap
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+			texture_unit STMap
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+		}
+	}
+}
+
+material Ogre/Custom/NoSTMap
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Tex2a_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Custom/NoSTMap
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+		}
+	}
+}

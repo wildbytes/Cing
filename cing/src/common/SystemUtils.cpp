@@ -121,6 +121,157 @@ namespace Cing
 	}
 
 
+	/**
+	 * @brief Returns whether the given path is a folder or not
+	 *
+	 * @param folderPath Absolute path to the folder to be created
+	 * @return True if the folder exists or not
+	 */
+	bool isFolder( const std::string& path )
+	{
+		return boost::filesystem::is_directory(path);
+	}
+
+
+	/**
+	 * @brief List the directories in a given path
+	 *
+	 * @param folderPath Absolute path to the folder to be created
+	 * @return The list of directories inside the given path, not including "." and "..". It'll be empty if the path doesn't
+	 *   exist or if it's not a directory
+	 */
+	std::vector<std::string> listDirectoriesAtPath( const std::string& _path )
+	{
+		std::string path = _path;
+		std::vector<std::string> dirs;
+
+		// check it finishes with a '/'
+		if (path[path.size() - 1] != '/' && 
+			path[path.size() - 1] != '\\')
+		{
+			path.append("/");
+		}
+
+		// first check it exists and it's a dir
+		boost::filesystem::path dirPath(path);
+		if (!boost::filesystem::exists(dirPath) ||
+			!boost::filesystem::is_directory(dirPath))
+			return dirs;
+
+		// now iterate over all the directories in the given dir
+		boost::filesystem::directory_iterator end_iter;
+		for (boost::filesystem::directory_iterator it(dirPath); it != end_iter; ++it)
+		{
+			if (boost::filesystem::is_directory((*it).status()))
+			{
+				boost::filesystem::path p = (*it).path();
+				boost::filesystem::path filenamePath = p.filename();
+				const wchar_t* filenameW = filenamePath.c_str();
+				char filename[128];
+				wcstombs(filename, filenameW, 128);
+				dirs.push_back(filename);
+			}
+		}
+
+		return dirs;
+	}
+
+	/**
+	 * @brief List the files in a given path. It won't list directories
+	 *
+	 * @param folderPath Absolute path to the folder to be created
+	 * @return The list of directories inside the given path, not including "." and "..". It'll be empty if the path doesn't
+	 *   exist or if it's not a directory
+	 */
+	std::vector<std::string> listFilesAtPath( const std::string& _path )
+	{
+		std::string path = _path;
+		std::vector<std::string> dirs;
+
+		// check it finishes with a '/'
+		if (path[path.size() - 1] != '/' && 
+			path[path.size() - 1] != '\\')
+		{
+			path.append("/");
+		}
+
+		// first check it exists and it's a dir
+		boost::filesystem::path dirPath(path);
+		if (!boost::filesystem::exists(dirPath) ||
+			!boost::filesystem::is_directory(dirPath))
+			return dirs;
+
+		// now iterate over all the directories in the given dir
+		boost::filesystem::directory_iterator end_iter;
+		for (boost::filesystem::directory_iterator it(dirPath); it != end_iter; ++it)
+		{
+			if (!boost::filesystem::is_directory((*it).status()))
+			{
+				boost::filesystem::path p = (*it).path();
+				boost::filesystem::path filenamePath = p.filename();
+				const wchar_t* filenameW = filenamePath.c_str();
+				char filename[128];
+				wcstombs(filename, filenameW, 128);
+				dirs.push_back(filename);
+			}
+		}
+
+		return dirs;
+	}
+
+	
+	/** Copies the given file to the destination file
+     * @param[in]	path to the original file
+     * @param[in]	path to the destination file
+     * @return		true if the copy finished successfully, false otherwise
+	 */
+	void copyFile(std::string const& orig, std::string const& dest)
+	{
+		boost::filesystem::path origPath(orig.c_str());
+		boost::filesystem::path destPath(dest.c_str());
+		boost::filesystem::copy(origPath, destPath);
+	}
+
+	//bool copyFile( std::string const& origPath, std::string const& destPath )
+	//{
+	//	// open the files (both for reading and writing)
+	//	std::ifstream input;
+	//	std::ofstream output;
+
+	//	input.open(origPath.c_str(), std::ifstream::binary);
+	//	output.open(destPath.c_str(), std::ifstream::binary);
+
+	//	// if there was an issue opening either return false already
+	//	if (!input || !output)
+	//		return false;
+
+	//	// check the length of the file to be able to create the buffer of the right length
+	//	input.seekg(0, input.end);
+	//	unsigned int length = input.tellg();
+	//	input.seekg(0, input.beg);
+	//	if (length > 0)
+	//	{
+	//		// create the buffer to read the file contents
+	//		char* buffer = new char[length];
+
+	//		// read the buffer 
+	//		input.read(buffer, length);
+
+	//		// write it to the destination
+	//		output.write(buffer, length);
+
+	//		// release the memory used
+	//		delete[] buffer;
+	//	}
+
+	//	// close the files
+	//	input.close();
+	//	output.close();
+
+	//	// everything went fine, return true
+	//	return true;
+	//}
+
 
 	/** Splits a path into the basePath (the folder) and the file name (just filename + extension.
      * @param[in]	path Path to split
@@ -203,5 +354,5 @@ namespace Cing
 #endif
 	}
 
-	
+
 } // namespace Cing

@@ -29,6 +29,7 @@
 #include "CommonPrereqs.h"
 
 #include <string>
+#include <vector>
 
 /**
  * @file
@@ -45,6 +46,12 @@ namespace Cing
 	bool 		fileExists( const std::string& fileName );
 	bool 		folderExists( const std::string& folderPath );
 	bool		createFolder( const std::string& folderPath );
+	bool		isFolder( const std::string& path );
+
+	std::vector<std::string> listDirectoriesAtPath( const std::string& path );
+	std::vector<std::string> listFilesAtPath( const std::string& path );
+
+	void		copyFile( std::string const& origPath, std::string const& destPath );
 
 	// Paths
 	void		splitFilename		( const std::string& path, std::string& outBasePath, std::string& outFileName );

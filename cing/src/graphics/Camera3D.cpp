@@ -32,6 +32,9 @@ Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #include "OgreCamera.h"
 #include "OgreSceneManager.h"
 
+#include "graphics/GraphicsManager.h"
+
+
 // Common includes
 #include "common/Exception.h"
 #include "common/Release.h"
@@ -142,9 +145,13 @@ namespace Cing
 		if ( !isValid() )
 			return;
 
-		// Delete resources
-		m_pOgreSceneManager->destroyCamera( m_pOgreCamera );
+		Ogre::SceneManager* sceneManager = GraphicsManager::getSingleton().getSceneManagerPtr();
+		if ( sceneManager )
+		{
+			sceneManager->destroyCamera( m_pOgreCamera );
+		}
 
+		
 		// The class is not valid anymore
 		m_bIsValid = false;
 	}

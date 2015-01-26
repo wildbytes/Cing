@@ -879,7 +879,7 @@ namespace Cing
 	 * Builds an absolute path to the file that will be loaded into the player
 	 * @return true if there was no problem
 	 */
-	bool MediaPlayerGS::buildPathToFile( const String& path )
+	bool MediaPlayerGS::buildPathToFile( const std::string& path )
 	{
 		LOG_ENTER_FUNCTION;
 	
@@ -1176,7 +1176,7 @@ namespace Cing
 	 * @param	cingPixelFormat Cing Pixel format to be translated into Gstreamer pixel format	
 	 * @return	Gstreamer pixel format
 	 */
-	GraphicsType MediaPlayerGS::gstToCingPixelFormat( const String& gstVideoFormat )
+	GraphicsType MediaPlayerGS::gstToCingPixelFormat( const std::string& gstVideoFormat )
 	{
 		LOG_ENTER_FUNCTION;
 	

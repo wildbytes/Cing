@@ -175,6 +175,12 @@
     <Filter Include="cing_ings\Emotiv">
       <UniqueIdentifier>{35742443-76df-4fbd-b59e-c102a58a45dd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Materials\Shaders">
+      <UniqueIdentifier>{70dc4863-2e2b-475b-846b-37373bbfe70b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="cing_ings\Hap">
+      <UniqueIdentifier>{ce5030c2-efcb-4094-8772-8418cb5e05b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\CingMaterials.material">
@@ -194,6 +200,42 @@
     </None>
     <None Include="..\..\..\..\src\input\BaseInputDevice.inl">
       <Filter>Src\Input\Header Files</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.compositor">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Glass.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\ColorCorrection.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\InvertFP.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Invert.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\BlackAndWhite.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\GrayScale.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\ColorCorrectionFP.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\LUT.cg">
+      <Filter>Materials\Shaders</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\LUT.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\STMap.material">
+      <Filter>Materials\Scripts</Filter>
+    </None>
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\STMap.cg">
+      <Filter>Materials\Shaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -487,6 +529,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.cpp">
       <Filter>cing_ings\Phidgets</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Hap\src\MediaPlayerHap.cpp">
+      <Filter>cing_ings\Hap</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\cing_ings\Hap\libs\HapSupport\src\HapSupport.cpp">
+      <Filter>cing_ings\Hap</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -889,6 +937,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Phidgets\src\PhidgetInterfaceKitController.h">
       <Filter>cing_ings\Phidgets</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Hap\src\MediaPlayerHap.h">
+      <Filter>cing_ings\Hap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\cing_ings\Hap\libs\HapSupport\src\HapSupport.h">
+      <Filter>cing_ings\Hap</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
