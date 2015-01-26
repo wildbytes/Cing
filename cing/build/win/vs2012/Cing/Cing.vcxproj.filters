@@ -536,6 +536,9 @@
     <ClCompile Include="..\..\..\..\..\cing_ings\Hap\libs\HapSupport\src\HapSupport.cpp">
       <Filter>cing_ings\Hap</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\LogHistory.cpp">
+      <Filter>Src\Common\Source Files\Log</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\src\Cing-Precompiled.h">
@@ -943,6 +946,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\cing_ings\Hap\libs\HapSupport\src\HapSupport.h">
       <Filter>cing_ings\Hap</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\LogHistory.h">
+      <Filter>Src\Common\Header Files\Log</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

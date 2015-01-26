@@ -163,6 +163,7 @@
     <ClCompile Include="..\..\..\..\src\audio\AudioInputOpenAL.cpp" />
     <ClCompile Include="..\..\..\..\src\audio\SoundManagerOpenAL.cpp" />
     <ClCompile Include="..\..\..\..\src\audio\SoundOpenAL.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\LogHistory.cpp" />
     <ClCompile Include="..\..\..\..\src\framework\AppFrameworkBasic.cpp" />
     <ClCompile Include="..\..\..\..\src\input\InputManagerOIS.cpp" />
     <ClCompile Include="..\..\..\..\src\input\InputUtils.cpp" />
@@ -289,6 +290,7 @@
     <ClInclude Include="..\..\..\..\src\audio\BaseSound.h" />
     <ClInclude Include="..\..\..\..\src\audio\SoundManagerOpenAL.h" />
     <ClInclude Include="..\..\..\..\src\audio\SoundOpenAL.h" />
+    <ClInclude Include="..\..\..\..\src\common\LogHistory.h" />
     <ClInclude Include="..\..\..\..\src\framework\AppFrameworkBasic.h" />
     <ClInclude Include="..\..\..\..\src\graphics\BaseRenderer2D.h" />
     <ClInclude Include="..\..\..\..\src\input\InputManagerBase.h" />

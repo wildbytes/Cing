@@ -31,6 +31,7 @@
 #include "LogManager.h"
 #include "eString.h"
 #include "WindowsEventLogger.h"
+#include "LogHistory.h"
 
 #undef nil
 #include <PTypes/include/ptime.h>
@@ -224,6 +225,9 @@ void LogManager::logMessage( LogMessageLevel level, const char* msg, ... )
 	// Log is not ready yet (probably we are initializing the app)
 	else if (level >= m_debugOutputLogLevel)
 		std::cout << msgFormated;
+
+	// store it on the history
+	LogHistory::getSingletonPtr()->addLog(level, outputMsg.str());
 
 	// Send it to the debug console
 	// TODO: decide policy
