@@ -67,6 +67,22 @@ void LogHistory::setMaxLogs(int maxLogs)
 }
 
 //-----------------------------------------------------------------------------------------------
+void LogHistory::setMinLogLevel(LogManager::LogMessageLevel level)
+{
+	m_minLogLevel = level;
+
+	// remove all the logs that don't reach that minimum level
+	for (std::vector<LogInfo>::iterator it(m_logs.begin()); it != m_logs.end();)
+	{
+		LogInfo const& log = *it;
+		if ((int)log.level < (int)m_minLogLevel)
+			it = m_logs.erase(it);
+		else
+			++it;
+	}
+}
+
+//-----------------------------------------------------------------------------------------------
 void LogHistory::addLog(LogManager::LogMessageLevel level, std::string const& msg)
 {
 	if ((int)level >= (int)m_minLogLevel)

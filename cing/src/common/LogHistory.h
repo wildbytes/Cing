@@ -46,9 +46,11 @@ public:
 	int getTotalLogs() const			{ return m_totalLogs; }
 	int getMaxLogs() const				{ return m_maxLogs; }
 	int getNumLogsInHistory() const		{ return (int)m_logs.size(); }
-	LogInfo const& getLog(int i) const	{ return m_logs[i]; }
+	LogInfo const&				getLog(int i) const			{ return m_logs[i]; }
+	LogManager::LogMessageLevel	getMinLogLevel() const		{ return m_minLogLevel; }
 
 	void setMaxLogs(int maxLogs);
+	void setMinLogLevel(LogManager::LogMessageLevel level);
 
 private:
 	int m_totalLogs;				//< the total number of messages that have been logged
