@@ -60,6 +60,7 @@ namespace Cing
 		void		initAsRenderTarget	( int width, int height );
 		void		init				( const Image& other, Ogre::SceneManager* sm = NULL );
 		bool		load				( const std::string& path, Ogre::SceneManager* sm = NULL );
+		bool		load				( void* data, size_t size, std::string const& path, Ogre::SceneManager* sm );
 		void		save				( const std::string& path );
 		void		end					();
 
@@ -163,6 +164,7 @@ namespace Cing
 	private:
 		// Private methods
 		bool	loadImageFromDisk	( const std::string& imagePath );
+		bool	loadImageFromMemory	( void* data, size_t size, const std::string& imagePath );
 
 		// Private attributes
 		std::string						m_path;				///< Path to the image file (relative to data folder)

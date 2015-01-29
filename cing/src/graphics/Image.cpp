@@ -340,6 +340,72 @@ namespace Cing
 	}
     
 	/**
+	 * @brief Loads an image file from memory and loads it into the texture manager so it is accessible just by the file name
+	 * @param imagePath  Full path to the texture file
+	 */
+	bool Image::loadImageFromMemory(void* data, size_t size, const std::string& imagePath)
+	{
+		bool image_loaded = false;
+        
+		// Make sure it has extension to know the file type
+		Ogre::String tex_ext;
+		Ogre::String::size_type index_of_extension = imagePath.find_last_of('.');
+		if (index_of_extension != Ogre::String::npos)
+		{
+			// Create the ogre data stream from the file stream
+			tex_ext = imagePath.substr(index_of_extension+1);
+			Ogre::MemoryDataStream* memDataStream = new Ogre::MemoryDataStream(data, size, false, true);
+			Ogre::DataStreamPtr data_stream(memDataStream);
+				
+			// Process image data from stream to store it in our shared pointer buffer
+			// NOTE: this code comes from Ogre::Image::load method but is used directly to be able to store the image data in our shared pointer
+            Ogre::Codec * pCodec = 0;
+                
+			// derive from magic number
+            // read the first 32 bytes or file size, if less
+            size_t magicLen = std::min(data_stream->size(), (size_t)32);
+            char magicBuf[32];
+            data_stream->read(magicBuf, magicLen);
+            // return to start
+            data_stream->seek(0);
+            pCodec = Ogre::Codec::getCodec(magicBuf, magicLen);
+                
+			if( !pCodec )
+			{
+				LOG_ERROR( "[error] Unable to load image [%s]", imagePath.c_str() );
+				return false;
+			}
+                
+            Ogre::Codec::DecodeResult res = pCodec->decode(data_stream);
+                
+            Ogre::ImageCodec::ImageData* pData = static_cast<Ogre::ImageCodec::ImageData*>(res.second.getPointer());
+                
+            size_t imageWidth	= pData->width;
+            size_t imageHeight	= pData->height;
+            size_t bufferSize	= pData->size;
+            Ogre::PixelFormat imageFormat = pData->format;
+                
+			// TODO: optimize this
+			// Create the local copy of the data (shared pointer memory). we do this to ensure we control the memory, no the ogre::image class, as in some cases it might be probelematic
+			m_data = ImageDataPtr( new unsigned char[bufferSize] );
+			std::memcpy( m_data.get(), res.first->getPtr(), bufferSize );
+                
+            // Make sure stream deletes
+            res.first->setFreeOnClose(true);
+                
+			// Init the Ogre::image (with our buffer)
+			m_image.loadDynamicImage( m_data.get(), imageWidth, imageHeight, imageFormat );
+				
+			// Load the texture to make it available in the future just by using the texture name
+			// TODO: INTERGRATE THIS TO OPTIMIZE
+			//Ogre::TextureManager::getSingleton().loadImage(imagePath, Ogre::ResourceGroupManager::DEFAULT_RESOURCE_GROUP_NAME, m_image);
+			image_loaded = true;
+		}
+
+		return image_loaded;
+	}
+    
+	/**
      * @brief Creates an image from a file. The image loaded can be modified afterwards.
      *
      * @note The image file specified should be placed on the data directory of the application
@@ -458,6 +524,75 @@ namespace Cing
         
 		return true;
 		
+	}
+    
+	/**
+     * @brief Creates an image from a file. The image loaded can be modified afterwards.
+     *
+     * @note The image file specified should be placed on the data directory of the application
+     *
+     * @note Supported image formats are: .bmp, .jpg, .gif, .raw, .png, .tga and .dds.
+     *
+     * @param path  Path of the file to be loaded. It can be relative to the data folder, or absolute.
+     * @param path  SceneManager container
+     */
+	bool Image::load( void* data, size_t size, std::string const& path, Ogre::SceneManager* sm )
+	{
+		// Check application correctly initialized (could not be if the user didn't calle size function)
+		Application::getSingleton().checkSubsystemsInit();
+        
+		m_path = path;
+
+		// Load the image from memory
+		bool loaded = loadImageFromMemory( data, size, m_path );
+		if ( !loaded )
+		{
+			LOG_ERROR( "The image %s could not be loaded at %s", path.c_str(), m_path.c_str() );
+			return false;
+		}
+        
+		// This file has been loaded from file
+		m_loadedFromFile = true;
+        
+		// Check if image was loaded ok
+		if ( m_image.getData() )
+			LOG( "Image succesfully loaded: %s ", m_path.c_str() );
+		else
+		{
+			LOG( "Error loading Image %s", m_path.c_str() );
+			return false;
+		}
+        
+		// Store image format (for images loaded from file, we force it to be RGB or RGBA)
+		m_format = toCingPixelFormat( m_image.getFormat() );
+        
+		// Create the image
+		m_nChannels = (int)Ogre::PixelUtil::getNumElemBytes( (Ogre::PixelFormat)m_format );
+		
+		if ( sm ==NULL )
+		{
+			// Create the texture quad (to draw image) or reset its width and height
+			if ( !isValid () )
+				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format  );
+			else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+				m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		}else{
+			// Create the texture quad (to draw image) or reset its width and height
+			if ( !isValid () )
+				m_quad.init( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format, DYNAMIC_WRITE_ONLY_DISCARDABLE, sm  );
+			else if ( (int)m_image.getWidth() != (int)m_quad.getTextWidth() || (int)m_image.getHeight() != m_quad.getTextHeight() )
+				m_quad.reset( (int)m_image.getWidth(), (int)m_image.getHeight(), m_format );
+		}
+        
+        
+		// Load image data to texture
+		updateTexture();
+        
+		// The class is now initialized
+		m_bIsValid = true;
+		m_bUpdateTexture = false;
+        
+		return true;
 	}
     
 	/**
