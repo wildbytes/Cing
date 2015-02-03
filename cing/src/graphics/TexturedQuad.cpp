@@ -84,7 +84,9 @@ namespace Cing
 		m_bIsValid				( false ),
 		m_renderQueueForced		( false ),
 		m_sm					( NULL ),
-		m_ogreOrigMaterialName	( "" )
+		m_ogreOrigMaterialName	( "" ),
+		m_forceDisableDepthCheck( false),
+		m_forceDisableDepthWrite( false)
 	{
 	}
 
@@ -130,6 +132,9 @@ namespace Cing
 		m_format		= format;
 		m_render2D		= false;
 		m_alpha			= 255;
+
+		m_forceDisableDepthCheck = false;
+		m_forceDisableDepthWrite = false;
 
 		// Generate unique names for texture, material and ogre manual object
 		generateUniqueNames();
@@ -1154,8 +1159,11 @@ namespace Cing
 			Ogre::MaterialPtr material = Ogre::MaterialManager::getSingleton().getByName(m_ogreMaterialName);
 			if ( !material.isNull() )
 				material->getTechnique(0)->getPass(0)->setSceneBlending( m_sbType );	
-			enableDepthWrite(true);
-			enableDepthCheck(true);
+
+			bool depthWrite = !m_forceDisableDepthWrite;
+			bool depthCheck = !m_forceDisableDepthCheck;
+			enableDepthWrite(depthWrite);
+			enableDepthCheck(depthCheck);
 		}
 
 	}

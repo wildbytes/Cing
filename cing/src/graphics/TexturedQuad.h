@@ -134,6 +134,11 @@ namespace Cing
 
 		void					setSceneBlendType	( Ogre::SceneBlendType type );
 
+		bool					getForceDisableDepthCheck () const			{ return m_forceDisableDepthCheck; }
+		bool					getForceDisableDepthWrite () const			{ return m_forceDisableDepthWrite; }
+		void					setForceDisableDepthCheck ( bool disable )	{ m_forceDisableDepthCheck = disable; }
+		void					setForceDisableDepthWrite ( bool disable )	{ m_forceDisableDepthWrite = disable; }
+
 	protected:
 
 		// Private methods
@@ -179,6 +184,9 @@ namespace Cing
 		bool						m_visible;						///< Tells if the object is visible or not
 		bool						m_render2D;             		///< If true the quad is rendered in 2d, over the 3d scene
 		bool						m_bIsValid;	            		///< Indicates whether the class is valid or not. If invalid none of its methods except init should be called.
+
+		bool						m_forceDisableDepthCheck;		///< Indicates that we have to disable the depth test
+		bool						m_forceDisableDepthWrite;		///< Indicates that we have to disable writing to the Z-buffer
 
 		Ogre::SceneBlendType		m_sbType;							///< Scene blend operation
 	};
