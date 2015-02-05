@@ -1,0 +1,14 @@
+sampler MainTexture : register(s0);
+sampler Mask : register(s1);
+
+
+
+float4 main_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 col = tex2D(MainTexture, iTexCoord);
+	float4 maskCol = tex2D(Mask, iTexCoord);
+
+	col.a *= maskCol.a;
+
+	return col;
+}

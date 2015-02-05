@@ -1,0 +1,45 @@
+fragment_program Ogre/Compositor/MaskedImageFP cg
+{
+	source Mask.cg
+	entry_point main_ps
+	profiles ps_2_0 arbfp1
+}
+
+material Ogre/Compositor/MaskedImage
+{
+	technique
+	{
+
+		pass
+		{
+			cull_hardware none
+			cull_software none
+			depth_func always_pass
+			lighting off
+			depth_write off
+
+			vertex_program_ref Ogre/Compositor/StdQuad_Cg_vp
+			{
+			}
+
+			fragment_program_ref Ogre/Compositor/MaskedImageFP
+			{
+			}
+
+			texture_unit MainTexture
+			{
+                tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+			texture_unit Mask
+			{
+				tex_coord_set 0
+				tex_address_mode clamp
+				filtering trilinear
+			}
+
+		}
+	}
+}
