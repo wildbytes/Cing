@@ -1,0 +1,34 @@
+sampler MainTexture : register(s0);
+
+uniform float saturation : register(c0) = 1.0;
+uniform float luminosity : register(c1) = 1.0;
+
+
+// Render the image with no effects, just the texture
+float4 normalRender_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 col = tex2D(MainTexture, iTexCoord);
+
+	return col;
+}
+
+// apply saturation and luminosity effects to the colours in the image
+float4 colorFXRender_ps (float2 iTexCoord : TEXCOORD0) : COLOR
+{
+	float4 col = tex2D(MainTexture, iTexCoord);
+
+	// apply saturation first
+	float gray = (col.r + col.g + col.b) / 3.0f;
+	float t = saturate(saturation);
+	float oneMinusT = 1.0 - t;
+	col.r = t * col.r + oneMinusT * gray;
+	col.g = t * col.g + oneMinusT * gray;
+	col.b = t * col.b + oneMinusT * gray;
+
+	// then apply luminosity
+	col.r = saturate(col.r * luminosity);
+	col.g = saturate(col.g * luminosity);
+	col.b = saturate(col.b * luminosity);
+
+	return col;
+}

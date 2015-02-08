@@ -104,6 +104,7 @@
   <ItemGroup>
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\ColorCorrectionFP.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\GrayScale.cg" />
+    <None Include="..\..\..\..\..\cing_bin\data\materials\programs\ImageRender.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\InvertFP.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\LUT.cg" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\programs\Mask.cg" />
@@ -115,6 +116,7 @@
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.compositor" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Examples.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Glass.material" />
+    <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\ImageRender.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Invert.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\LUT.material" />
     <None Include="..\..\..\..\..\cing_bin\data\materials\scripts\Mask.material" />
