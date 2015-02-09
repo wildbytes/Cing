@@ -1191,6 +1191,13 @@ namespace Cing
 		Ogre::Radian angle;
 		Quaternion q;
 		tranformation.extract3x3Matrix( rot );
+		Vector3 scale = currentTransformation.getScale();
+		Vector3 col0 = rot.GetColumn(0) * (1.0f / scale.x);
+		Vector3 col1 = rot.GetColumn(1) * (1.0f / scale.y);
+		Vector3 col2 = rot.GetColumn(2) * (1.0f / scale.z);
+		rot.SetColumn(0, col0);
+		rot.SetColumn(1, col1);
+		rot.SetColumn(2, col2);
 		rot.ToAngleAxis( axis, angle );
 		q.FromAngleAxis( angle, axis );
 
