@@ -85,6 +85,7 @@ void LogHistory::setMinLogLevel(LogManager::LogMessageLevel level)
 //-----------------------------------------------------------------------------------------------
 void LogHistory::addLog(LogManager::LogMessageLevel level, std::string const& msg)
 {
+#if _DEBUG
 	if ((int)level >= (int)m_minLogLevel)
 	{
 		if (m_logs.size() >= (size_t)m_maxLogs)
@@ -102,6 +103,7 @@ void LogHistory::addLog(LogManager::LogMessageLevel level, std::string const& ms
 
 	// increase the total number of logs
 	++m_totalLogs;
+#endif
 }
 
 }
